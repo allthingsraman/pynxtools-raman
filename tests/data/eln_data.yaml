@@ -1,0 +1,119 @@
+# Image
+#______________________
+# Not yet added metadata:
+# incident power: 50-60mW
+# Image of the measured Area
+# System ID: 100-1100-292
+# Objective Name:  Nikon 20x 20x / 0.4
+#Objective Magnification:  20
+#Image Width [µm]:  393.911
+#Image Height [µm]:  295.434
+
+#Illumination:
+#Reflection Light [%]:  20.58
+
+# Raman Spectrum
+#__________________________
+#Configuration: Raman CCD1
+
+#Monochromator?
+#UHTS300M:
+#Grating: G1: 600 g/mm BLZ=500nm
+#Center Wavelength [nm]: 596.989
+#Spectral Center [rel. 1/cm]: 2042.739
+
+#CCD?
+#DU970_BV:
+#Serial Number: 6358
+#Readout Mode: FVB (1-200)
+#Output Amplifier: Conventional
+#Vertical Shift Speed [µs]: 9.75
+#Horizontal Shift Speed [MHz]: 0.050
+#Preamplifier Gain: 1.00
+#Cycle Time [sec]: 1.00002
+#Sensor Temperature [°C]: -56
+
+#Number Of Accumulations: 20
+#Integration Time [s]: 1.00000
+
+#Objective
+#Objective:
+#Objective Name: Nikon 20x 20x / 0.4
+#Objective Magnification: 20.0
+
+
+
+#Data:
+#  data_identifier: 1
+#  data_software: WVASE
+#  data_software/@url: https://www.jawoollam.com/ellipsometry-software/wvase
+#  data_software/version: '3.882'
+#  data_type: Psi/Delta
+#  spectrum_type: wavelength
+#  spectrum_unit: angstrom
+Instrument:
+  beam_source:
+    parameter_reliability: nominal
+    average_power:
+      value: 80
+      unit: mW
+    incident_wavelength:
+      value: 532.100
+      unit: nm
+    associated_source: entry/instrument/source_laser
+  Detector:
+    count_time:
+      unit: s
+      value: 1.0
+    detector_type: CCD spectrometer
+  light_source:
+    source_type: laser #DPSS
+  Sample_stage:
+    environment_conditions:
+    stage_type: manual stage
+#  angle_of_incidence/@unit: degrees
+  device_information:
+    vendor: Witec
+    model: Alpha Raman
+  rotating_element_type: compensator (source side)
+#  software_RC2: CompleteEASE
+#  software_RC2/@url: https://www.jawoollam.com/ellipsometry-software/completeease
+#  software_RC2/@version: '6.37'
+#  instrument_calibration_RC2:
+#    calibration_status: no calibration
+Sample:
+  atom_types: Si
+  chemical_formula: Si
+  sample_name: Silicon Wafer
+#  physical_form: multi layer
+#  substrate: Si
+#  environment:
+#    sample_medium: air
+#  history:
+#    notes: Commercially purchased sample
+User:
+  address: Lennestr. 5, 04318 Leipzig
+  affiliation: Universität Leipzig
+  email: ron.hildebrandt@physik.hu-berlin.de
+  name: Hildebrandt, Ron
+#colnames:
+#- type
+#- wavelength
+#- angle_of_incidence
+#- Psi
+#- Delta
+#- err.Psi
+#- err.Delta
+#derived_parameter_type: depolarization
+experiment_description: Raman spectrum of commercial silicon wafer
+experiment_identifier:
+  identifier: exp-ID
+  is_persistent: "false"
+experiment_type: Raman spectroscopy
+raman_experiment_type: non-resonant Raman spectroscopy
+filename: Si-wafer-Raman-Spectrum-1.txt
+#plot_name: Psi and Delta
+title: Silicon Wafer
+sep: ","
+skip: 17
+start_time: '2024-06-21T14:04:54+02:00'
