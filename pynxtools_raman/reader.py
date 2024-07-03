@@ -28,7 +28,7 @@ DEFAULT_HEADER = {"sep": "\t", "skip": 0}
 
 CONVERT_DICT = {
     "unit": "@units",
-    "Detector": "detector_TYPE[detector_DU970BV]",  #"Detector": "detector_TYPE[detector_DU970BV]", sollte auch passen mit "Detector": "DETECTOR[detector_DU970BV]",
+    "Detector": "detector_TYPE[detector_DU970BV]",  # "Detector": "detector_TYPE[detector_DU970BV]", sollte auch passen mit "Detector": "DETECTOR[detector_DU970BV]",
     "source_532nmlaser": "SOURCE[source_532nmlaser]",
     "beam_532nmlaser": "beam_TYPE[beam_532nmlaser]",
     "Data": "DATA[data]",
@@ -42,9 +42,9 @@ CONVERT_DICT = {
     "spectrum_data_y_longname": "DATA[data]/spectrum_data_y/@long_name",
     "spectrum_data_x_longname": "DATA[data]/spectrum_data_x/@long_name",
     "source_type": "type",
-    "device_information" : "FABRICATION[device_information]",
-    "monochromator" : "MONOCHROMATOR[monochromator]",
-    "objective_lens" : "LENS_OPT[objective_lens]",
+    "device_information": "FABRICATION[device_information]",
+    "monochromator": "MONOCHROMATOR[monochromator]",
+    "objective_lens": "LENS_OPT[objective_lens]",
 }
 
 CONFIG_KEYS = [
@@ -116,7 +116,7 @@ def load_as_pandas_array(my_file, header):
         my_file,
         # use header = None and names to define custom column names
         header=None,
-        encoding='latin',
+        encoding="latin",
         names=header["colnames"],
         skiprows=header["skip"],
         delimiter=header["sep"],
@@ -161,7 +161,6 @@ def populate_template_dict(header, template):
         )
     )
 
-
     template.update(eln_data_dict)
 
     return template
@@ -176,26 +175,17 @@ def header_labels(header):
     return labels
 
 
-
-
-
 def data_array(whole_data, data_index):
     """User defined variables to produce slices of the whole data set"""
 
     axis_label = whole_data.keys()[data_index]
 
-
     length_data_entries = len(whole_data[axis_label])
     my_data_array = np.empty([length_data_entries])
 
-
-    my_data_array[:] = (
-                whole_data[axis_label].to_numpy().astype("float64")
-            )
+    my_data_array[:] = whole_data[axis_label].to_numpy().astype("float64")
 
     return my_data_array
-
-
 
 
 class RamanReader(BaseReader):
@@ -234,17 +224,20 @@ class RamanReader(BaseReader):
                 if i[:5] == "beam_":
                     list_of_beams.append(i)
         light_source_name = list_of_beams[0]
-        laser_wavelength = header["Instrument"][light_source_name]["incident_wavelength"]["value"]
+        laser_wavelength = header["Instrument"][light_source_name][
+            "incident_wavelength"
+        ]["value"]
 
-        def transform_nm_to_wavenumber(lambda_laser,lambda_measurement):
-            return -(1E7/lambda_measurement - 1E7/lambda_laser)
+        def transform_nm_to_wavenumber(lambda_laser, lambda_measurement):
+            return -(1e7 / lambda_measurement - 1e7 / lambda_laser)
 
         measured_wavelengths = whole_data["wavelength"].to_numpy()
 
         # Add the new created data to the panda data frame
-        data_x_Raman = transform_nm_to_wavenumber(laser_wavelength*np.ones(len(measured_wavelengths)), measured_wavelengths)
-        whole_data['DATA[data]/spectrum_data_x_Raman'] = data_x_Raman
-
+        data_x_Raman = transform_nm_to_wavenumber(
+            laser_wavelength * np.ones(len(measured_wavelengths)), measured_wavelengths
+        )
+        whole_data["DATA[data]/spectrum_data_x_Raman"] = data_x_Raman
 
         labels = header_labels(header)
 
@@ -255,7 +248,6 @@ class RamanReader(BaseReader):
         add_data_to_header(whole_data, 0, "spectrum_data_x")
         add_data_to_header(whole_data, 1, "spectrum_data_y")
         add_data_to_header(whole_data, 2, "DATA[data]/spectrum_data_x_Raman")
-
 
         if "atom_types" not in header["Sample"]:
             header["atom_types"] = extract_atom_types(
@@ -282,19 +274,19 @@ class RamanReader(BaseReader):
             raise IOError("No input files were given to raman Reader.")
 
         # The header dictionary is filled with entries.
-        header, labels = RamanReader.populate_header_dict_with_datasets(
-            file_paths
-        )
+        header, labels = RamanReader.populate_header_dict_with_datasets(file_paths)
         # The template dictionary is filled
         template = populate_template_dict(header, template)
 
-        #assign main axis for data entry
+        # assign main axis for data entry
         template[f"/ENTRY[entry]/DATA[data]/@signal"] = f"spectrum_data_y"
         template[f"/ENTRY[entry]/DATA[data]/@axes"] = f"spectrum_data_x_Raman"
 
         # add unit and long name for calculated Raman data
         template[f"/ENTRY[entry]/DATA[data]/spectrum_data_x_Raman/@units"] = "1/cm"
-        template[f"/ENTRY[entry]/DATA[data]/spectrum_data_x_Raman/@long_name"] = f"Raman Shift"
+        template[f"/ENTRY[entry]/DATA[data]/spectrum_data_x_Raman/@long_name"] = (
+            f"Raman Shift"
+        )
 
         return template
 
@@ -302,5 +294,5 @@ class RamanReader(BaseReader):
 # This has to be set to allow the convert script to use this reader. Set it to "MyDataReader".
 READER = RamanReader
 
-#pynxtools will call:
-#data = data_reader().read(template=Template(template), file_paths=input_file, **kwargs)
+# pynxtools will call:
+# data = data_reader().read(template=Template(template), file_paths=input_file, **kwargs)
