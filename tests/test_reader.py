@@ -3,43 +3,24 @@ Basic example based test for the stm reader
 """
 
 import os
-import xml.etree.ElementTree as ET
 from glob import glob
+from pathlib import Path
 
-from pynxtools.dataconverter.helpers import (
-    generate_template_from_nxdl,
-    validate_data_dict,
-)
-from pynxtools.dataconverter.template import Template
-from pynxtools.definitions.dev_tools.utils.nxdl_utils import get_nexus_definitions_path
-
-from pynxtools_raman.reader import RamanReader
+from pynxtools.testing.nexus_conversion import ReaderTest
 
 
-def test_example_data():
+def test_nexus_conversion(caplog, tmp_path):
     """
-    Test the example data for the stm reader
+    Tests the conversion into nexus.
     """
-    reader = RamanReader
-    assert callable(reader.read)
-
-    def_dir = get_nexus_definitions_path()
-
-    data_dir = os.path.join(os.path.dirname(__file__), "data")
-    input_files = sorted(glob(os.path.join(data_dir, "*")))
-
-    for supported_nxdl in reader.supported_nxdls:
-        nxdl_file = os.path.join(
-            def_dir, "contributed_definitions", f"{supported_nxdl}.nxdl.xml"
-        )
-
-        root = ET.parse(nxdl_file).getroot()
-        template = Template()
-        generate_template_from_nxdl(root, template)
-
-        read_data = reader().read(
-            template=Template(template), file_paths=tuple(input_files)
-        )
-
-        assert isinstance(read_data, Template)
-        assert validate_data_dict(template, read_data, root)
+    caplog.clear()
+    dir_path = Path(__file__).parent / "data"
+    test = ReaderTest(
+        nxdl="NXraman",
+        reader_name="raman",
+        files_or_dir=glob(os.path.join(dir_path, "*")),
+        tmp_path=tmp_path,
+        caplog=caplog,
+    )
+    test.convert_to_nexus(caplog_level="WARNING", ignore_undocumented=False)
+    test.check_reproducibility_of_nexus()
