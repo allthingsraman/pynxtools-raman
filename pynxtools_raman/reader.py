@@ -31,6 +31,7 @@ CONVERT_DICT = {
     "Detector": "detector_TYPE[detector_DU970BV]",  # "Detector": "detector_TYPE[detector_DU970BV]", sollte auch passen mit "Detector": "DETECTOR[detector_DU970BV]",
     "source_532nmlaser": "SOURCE[source_532nmlaser]",
     "beam_532nmlaser": "beam_TYPE[beam_532nmlaser]",
+    "incident_beam": "beam_incident",   # this entry can be removed from NXraman definition, as at least one beam was made required in NXopt after the workshop
     "Data": "DATA[data]",
     "Instrument": "INSTRUMENT[instrument]",
     "Sample": "SAMPLE[sample_PET_or_PS]",

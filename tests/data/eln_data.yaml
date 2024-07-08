@@ -44,6 +44,10 @@ spectrum_data_x_longname: Wavelength
 spectrum_data_y_longname: Raman Intensity
 Instrument:
   scattering_configuration: z(xx)-z
+  incident_beam:
+    wavelength:
+      value: 532.1
+      unit: nm
   beam_532nmlaser:
     parameter_reliability: nominal
     average_power:
@@ -124,3 +128,6 @@ colnames:
 sep: ","
 skip: 17
 start_time: '2024-06-21T14:04:54+02:00'
+definition: NXraman
+definition/@url: https://github.com/FAIRmat-NFDI/nexus_definitions/blob/fairmat/contributed_definitions/NXraman.nxdl.xml # can be removed later, if the NeXus as submodule in pynxtools is updated, just in to let CICD pass. 
+
