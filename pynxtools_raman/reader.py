@@ -62,7 +62,7 @@ CONFIG_KEYS = [
     "unit_x",
 ]
 
-REPLACE_NESTED = Dict[str, str] = {}
+REPLACE_NESTED: dict[str, str] = {}
 # REPLACE_NESTED = {
 #    #    "instrument": "INSTRUMENT[instrument]",
 # }
