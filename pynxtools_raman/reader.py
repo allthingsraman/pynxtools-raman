@@ -62,7 +62,7 @@ CONFIG_KEYS = [
     "unit_x",
 ]
 
-
+REPLACE_NESTED = Dict[str, str] = {}
 # REPLACE_NESTED = {
 #    #    "instrument": "INSTRUMENT[instrument]",
 # }
@@ -158,7 +158,7 @@ def populate_template_dict(header, template):
         FlattenSettings(
             dic=header,
             convert_dict=CONVERT_DICT,
-            # replace_nested=REPLACE_NESTED,
+            replace_nested=REPLACE_NESTED,
             ignore_keys=CONFIG_KEYS,
         )
     )
