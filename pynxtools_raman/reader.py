@@ -28,14 +28,14 @@ DEFAULT_HEADER = {"sep": "\t", "skip": 0}
 
 CONVERT_DICT = {
     "unit": "@units",
-    "Detector": "detector_TYPE[detector_DU970BV]",  # "Detector": "detector_TYPE[detector_DU970BV]", sollte auch passen mit "Detector": "DETECTOR[detector_DU970BV]",
+    "detector": "detector_TYPE[detector_DU970BV]",  # "detector": "detector_TYPE[detector_DU970BV]", sollte auch passen mit "detector": "DETECTOR[detector_DU970BV]",
     "source_532nmlaser": "SOURCE[source_532nmlaser]",
     "beam_532nmlaser": "beam_TYPE[beam_532nmlaser]",
     "incident_beam": "beam_incident",  # this entry can be removed from NXraman definition, as at least one beam was made required in NXopt after the workshop
     "Data": "DATA[data]",
-    "Instrument": "INSTRUMENT[instrument]",
-    "Sample": "SAMPLE[sample_PET_or_PS]",
-    "User": "USER[user]",
+    "instrument": "INSTRUMENT[instrument]",
+    "sample": "SAMPLE[sample_PET_or_PS]",
+    "user": "USER[user]",
     "spectrum_data_y": "DATA[data]/spectrum_data_y",
     "spectrum_data_x": "DATA[data]/spectrum_data_x",
     "spectrum_data_y_unit": "DATA[data]/spectrum_data_y/@units",
@@ -63,7 +63,7 @@ CONFIG_KEYS = [
 ]
 
 REPLACE_NESTED = {
-    "Instrument": "INSTRUMENT[instrument]",
+#    "instrument": "INSTRUMENT[instrument]",
 }
 
 
@@ -219,13 +219,13 @@ class RamanReader(BaseReader):
 
         # As the specific name of beam entries in unknown, extract all beam names from instrument level
         list_of_beams = []
-        for i in header["Instrument"].keys():
+        for i in header["instrument"].keys():
             # look for all entries in instrument, add only if the first letters are like "beam_"
             if len(i) > 4:
                 if i[:5] == "beam_":
                     list_of_beams.append(i)
         light_source_name = list_of_beams[0]
-        laser_wavelength = header["Instrument"][light_source_name][
+        laser_wavelength = header["instrument"][light_source_name][
             "incident_wavelength"
         ]["value"]
 
@@ -250,9 +250,9 @@ class RamanReader(BaseReader):
         add_data_to_header(whole_data, 1, "spectrum_data_y")
         add_data_to_header(whole_data, 2, "DATA[data]/spectrum_data_x_Raman")
 
-        if "atom_types" not in header["Sample"]:
+        if "atom_types" not in header["sample"]:
             header["atom_types"] = extract_atom_types(
-                header["Sample"]["chemical_formula"]
+                header["sample"]["chemical_formula"]
             )
 
         return header, labels
