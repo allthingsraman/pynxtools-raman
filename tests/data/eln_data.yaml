@@ -68,9 +68,7 @@ instrument:
     detector_type: CCD
     device_information:
       model: DU970_BV
-      identifier:
-        identifier: "Serial Number: 6358"
-    serial_number: 6358
+      serial_number: "6358"
     detector_number:
       - 1600
       - 200
