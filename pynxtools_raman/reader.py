@@ -1,5 +1,5 @@
 from typing import Any, Tuple
-
+from typing import Dict
 
 import math
 import os
@@ -62,7 +62,7 @@ CONFIG_KEYS = [
     "unit_x",
 ]
 
-REPLACE_NESTED: dict[str, str] = {}
+REPLACE_NESTED: Dict[str, str] = {}
 # REPLACE_NESTED = {
 #    #    "instrument": "INSTRUMENT[instrument]",
 # }
