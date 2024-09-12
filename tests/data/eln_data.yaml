@@ -42,7 +42,7 @@ spectrum_data_x_unit: nm
 spectrum_data_y_unit: counts
 spectrum_data_x_longname: Wavelength
 spectrum_data_y_longname: Raman Intensity
-Instrument:
+instrument:
   scattering_configuration: z(xx)-z
   incident_beam:
     wavelength:
@@ -57,7 +57,7 @@ Instrument:
       value: 532.100
       unit: nm
     associated_source: entry/instrument/source_532nmlaser
-  Detector:
+  detector:
     detector_channel_type: multichannel
     count_time:
       unit: s
@@ -68,8 +68,7 @@ Instrument:
     detector_type: CCD
     device_information:
       model: DU970_BV
-      identifier: "Serial Number: 6358"
-    serial_number: 6358
+      serial_number: "6358"
     detector_number:
       - 1600
       - 200
@@ -106,10 +105,10 @@ Instrument:
 #  atom_types: Si
 #  chemical_formula: Si
 #  sample_name: Silicon Wafer
-Sample:
-  sample_name: CD cover (probably PS or PET)
+sample:
+  name: CD cover (probably PS or PET)
   atom_types: C
-User:
+user:
   address: Lennestr. 5, 04318 Leipzig
   affiliation: Universität Leipzig
   email: ron.hildebrandt@physik.hu-berlin.de
