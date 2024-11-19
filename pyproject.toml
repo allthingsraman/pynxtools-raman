@@ -28,8 +28,7 @@ dependencies = [
 [project.entry-points."pynxtools.reader"]
 raman = "pynxtools_raman.reader:RamanReader"
 raman_multi = "pynxtools_raman_multiformat.reader:RamanReaderMulti"
-raman_multi2 = "pynxtools_multi.reader:MyDataReader2"
-raman_multi3 = "pynxtools_multi_2.reader:RamanMultiReader"
+
 
 [project.urls]
 "Homepage" = "https://github.com/FAIRmat-NFDI/pynxtools-raman"
