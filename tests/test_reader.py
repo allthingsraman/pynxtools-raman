@@ -24,3 +24,21 @@ def test_nexus_conversion(caplog, tmp_path):
     )
     test.convert_to_nexus(caplog_level="WARNING", ignore_undocumented=False)
     test.check_reproducibility_of_nexus()
+
+
+    caplog.clear()
+    dir_path_multi = Path(__file__).parent / "data_multi"
+    test = ReaderTest(
+        nxdl="NXraman",
+        reader_name="raman_multi",
+        files_or_dir=glob(os.path.join(dir_path_multi, "*")),
+        tmp_path=tmp_path,
+        caplog=caplog,
+    )
+    test.convert_to_nexus(caplog_level="WARNING", ignore_undocumented=False)
+    test.check_reproducibility_of_nexus()
+
+
+
+
+
