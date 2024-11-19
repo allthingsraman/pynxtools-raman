@@ -36,6 +36,7 @@ class RamanReaderMulti(MultiFormatReader):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.txt_data: Dict[str, Any] = {}
 
         self.extensions = {
             ".yml": self.handle_eln_file,
