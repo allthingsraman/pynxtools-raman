@@ -43,6 +43,7 @@ data:
   unit_y: counts
   longname_x: Wavelength
   longname_y: Raman Intensity
+  longname_x_raman: Raman Shift
 instrument:
   scattering_configuration: z(xx)-z
   beam_incident:
@@ -77,7 +78,7 @@ instrument:
       value: -56
       unit: celsius
   source_532nmlaser:
-    source_type: laser #DPSS
+    type: laser #DPSS
     power:
       value: 80
       unit: mW

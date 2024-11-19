@@ -27,13 +27,6 @@ from pynxtools.dataconverter.readers.utils import parse_yml
 logger = logging.getLogger("pynxtools")
 
 CONVERT_DICT = {}
-#    "unit": "@units",
-#    "version": "@version",
-#    "user": "USER[user]",
-#    "instrument": "INSTRUMENT[instrument]",
-#    "detector": "DETECTOR[detector]",
-#    "sample": "SAMPLE[sample]",
-#}
 
 
 class RamanReaderMulti(MultiFormatReader):
@@ -48,8 +41,6 @@ class RamanReaderMulti(MultiFormatReader):
             ".yml": self.handle_eln_file,
             ".yaml": self.handle_eln_file,
             ".txt": self.handle_txt_file}
-         #   ".json": self.set_config_file,
-        #}
 
         self.txt_line_skips = None
 
@@ -60,8 +51,6 @@ class RamanReaderMulti(MultiFormatReader):
             )
         self.config_file = file_path
         return {}
-
-
 
     def handle_eln_file(self, file_path: str) -> Dict[str, Any]:
         self.eln_data = parse_yml(
@@ -77,14 +66,6 @@ class RamanReaderMulti(MultiFormatReader):
         self.read_txt_file(filepath)
         return {}
 
-
-
-
-
-
-
-
-
     def get_attr(self, key: str, path: str) -> Any:
         """
         Get the metadata that was stored in the main file.
@@ -95,6 +76,9 @@ class RamanReaderMulti(MultiFormatReader):
         return self.eln_data.get(path)
 
     def read_txt_file(self, filepath):
+        """
+        Read a .txt file from Witec Alpha Raman spectrometer and save the header and measurement data.
+        """
         with open(filepath, "r") as file:
             lines = file.readlines()
 
@@ -102,21 +86,22 @@ class RamanReaderMulti(MultiFormatReader):
         header_dict = {}
         data = []
         line_count = 0
-        header_length = None
+        data_mini_header_length = None
 
         # Track current section
         current_section = None
 
-
-
         for line in lines:
             line_count += 1
-            line = line.strip()  # Remove any leading/trailing whitespace
+            # Remove any leading/trailing whitespace
+            line = line.strip()
+            # Go through the lines and define two different regions "Header" and
+            # "Data", as these need different methods to extract the data.
             if line.startswith("[Header]"):
                 current_section = "header"
                 continue
             elif line.startswith("[Data]"):
-                header_length = line_count + 2
+                data_mini_header_length = line_count + 2
                 current_section = "data"
 
                 continue
@@ -128,22 +113,24 @@ class RamanReaderMulti(MultiFormatReader):
 
             # Parse the data section
             elif current_section == "data" and "," in line:
-                if line_count <= header_length:
+                # The header is set excactly until the float-like column data starts
+                # Rework this later to extract full metadata
+                if line_count <= data_mini_header_length:
                     if line.startswith("[Header]"):
-                        print("We have to do something here")
-                if line_count > header_length:
+                        logger.info(
+                            f"[Header] elements in the file {filepath}, are not parsed yet. Consider adden the respective functionality."
+                        )
+                if line_count > data_mini_header_length:
                     values = line.split(",")
                     data.append([float(values[0].strip()), float(values[1].strip())])
-
-        #transform linewise read data to colum style data
-
-
 
         # Transform: [[A, B], [C, D], [E, F]] into [[A, C, E], [B, D, F]]
         data = [list(item) for item in zip(*data)]
 
+        #transform linewise read data to colum style data
         data = np.transpose(data)
 
+        # assign column data with keys
         data_dict = {
             "data/x_values": data[:, 0],
             "data/y_values": data[:, 1]
@@ -153,23 +140,13 @@ class RamanReaderMulti(MultiFormatReader):
         self.txt_header = header_dict
 
 
-    def read_txt_columns(self, filepath):
-        data = np.loadtxt(filepath, delimiter=',')
-
-        # Convert the array into a dictionary with labeled columns
-        data_dict = {
-            "data/x_values": data[:, 0],
-            "data/y_values": data[:, 1]
-        }
-
-        A=self.transform_nm_to_wavenumber(532.1,data_dict["data/x_values"])
-        print(A,"A")
-        return data_dict
-
     def get_eln_data(self, key: str, path: str) -> Any:
         """Returns data from the given eln path."""
         if self.eln_data is None:
             return None
+
+        # Filtering list, for NeXus concepts which use mixed notation of
+        # upper and lowercase to ensure correct NXclass labeling.
         upper_and_lower_mixed_nexus_concepts = ["/detector_TYPE[",
                                         "/beam_TYPE[",
                                         "/source_TYPE[",
@@ -181,15 +158,18 @@ class RamanReaderMulti(MultiFormatReader):
 
         ]
         if self.eln_data.get(key) is None:
+            # filter for mixed concept names
             for string in upper_and_lower_mixed_nexus_concepts:
                 key = key.replace(string,"/[")
             # add only characters, if they are lower case and if they are not "[" or "]"
             result = ''.join([char for char in key if not (char.isupper() or char in '[]')])
-            result = result.replace("entry","ENTRY[entry]") # CHANGE THIS LATER
+            # Filter as well for
+            result = result.replace("entry",f"ENTRY[{self.callbacks.entry_name}]")
+
             if self.eln_data.get(result) is not None:
                 return self.eln_data.get(result)
             else:
-                return "Parsing error?"
+                logger.warning(f"No key found during eln_data processsing for key '{key}' after it's modification to '{result}'.")
         return self.eln_data.get(key)
 
     def get_data(self, key: str, path: str) -> Any:
@@ -202,7 +182,8 @@ class RamanReaderMulti(MultiFormatReader):
 
     def post_process(self) -> None:
         """
-        Do postprocessing after all files and config file are read.
+        Post process the Raman data to add the Raman Shift from input laser wavelength and
+        data wavelengths.
         """
 
         def transform_nm_to_wavenumber(self, lambda_laser, lambda_measurement):
@@ -225,18 +206,10 @@ class RamanReaderMulti(MultiFormatReader):
 
         self.txt_data["data/x_values_raman"] = x_values_raman
 
-
-
-
 READER = RamanReaderMulti
 
 # Use this command in this .py file folder:
 # dataconverter eln_data.yaml Si-wafer-Raman-Spectrum-1.txt  -c config_file.json --reader raman_multi --nxdl NXraman --output output_raman.nxs
 #
 # Remaining Warnings
-# Could not find value for key /ENTRY[entry]/DATA[data]/x_values_raman/@long_name with value @attrs:/ENTRY[entry]/data/longname_x_raman.
-# Tried prefixes: [('@attrs', '/ENTRY[entry]/data/longname_x_raman')].
 # WARNING: Missing attribute: "/ENTRY[entry]/definition/@URL"
-# WARNING: Field /ENTRY[entry]/DATA[data]/y_values/@unit written without documentation.
-# WARNING: Field /ENTRY[entry]/DATA[data]/x_values/@unit written without documentation.
-# WARNING: Field /ENTRY[entry]/DATA[data]/x_values_raman/@unit written without documentation.
