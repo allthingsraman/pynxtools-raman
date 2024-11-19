@@ -47,6 +47,7 @@
   "/ENTRY[entry]/title": "@eln",
   "/ENTRY[entry]/start_time": "@eln",
   "/ENTRY[entry]/definition": "@eln",
+  "/ENTRY[entry]/definition/@url": "@eln",
   "/ENTRY[entry]/@default": "data",
   "/ENTRY[entry]/DATA[data]/@signal": "y_values",
   "/ENTRY[entry]/DATA[data]/y_values": "@data:y_values",
