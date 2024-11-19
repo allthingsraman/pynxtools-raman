@@ -41,7 +41,8 @@ class RamanReaderMulti(MultiFormatReader):
         self.extensions = {
             ".yml": self.handle_eln_file,
             ".yaml": self.handle_eln_file,
-            ".txt": self.handle_txt_file}
+            ".txt": self.handle_txt_file,
+            ".json": self.set_config_file}
 
         self.txt_line_skips = None
 

@@ -199,6 +199,7 @@ cython_debug/
 .pyenv
 *.pyc
 *.txt
+!tests/data-multi/.txt machen
 !requirements.txt
 !dev-requirements.txt
 build/
