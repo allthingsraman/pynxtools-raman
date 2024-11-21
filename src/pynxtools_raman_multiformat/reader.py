@@ -70,12 +70,12 @@ class RamanReaderMulti(MultiFormatReader):
 
     def get_attr(self, key: str, path: str) -> Any:
         """
-        Get the metadata that was stored in the main file.
+        Get the metadata that was stored in the main(=data) file.
         """
-        # This uses the path given from the config file (path = the part after "@attrs:")
-        # to get the corresponting value stored at in the eln_data.yaml file, at the 
-        # path value.
-        return self.eln_data.get(path)
+
+        if self.txt_data is None:
+            return None
+        return self.txt_data.get(path)
 
     def read_txt_file(self, filepath):
         """
@@ -143,9 +143,24 @@ class RamanReaderMulti(MultiFormatReader):
 
 
     def get_eln_data(self, key: str, path: str) -> Any:
-        """Returns data from the given eln path."""
+        """
+        Returns data from the eln file. This is done via the file: "config_file.json".
+        There are two suations:
+            1. The .json file has only a key assigned
+            2. The .json file has a key AND a value assigned.
+        The assigned value should be a "path", which reflects another entry in the eln file.
+        This acts as eln_path redirection, which is used for example to assign flexible
+        parameters from the eln_file (units, axisnames, etc.)
+        """
         if self.eln_data is None:
             return None
+        
+        # Use the path to get the eln_data (this refers to the 2. case)
+        if len(path) > 0:
+            return self.eln_data.get(path)
+
+        # If no path is assigned, use directly the given key to extract
+        # the eln data/value (this refers to the 1. case)
 
         # Filtering list, for NeXus concepts which use mixed notation of
         # upper and lowercase to ensure correct NXclass labeling.
