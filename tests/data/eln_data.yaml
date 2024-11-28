@@ -48,7 +48,7 @@ instrument:
     wavelength:
       value: 532.1
       unit: nm
-  beam_532nmlaser:
+  beam_incident:
     parameter_reliability: nominal
     average_power:
       value: 60
@@ -56,7 +56,7 @@ instrument:
     incident_wavelength:
       value: 532.100
       unit: nm
-    associated_source: entry/instrument/source_532nmlaser
+    associated_source: entry/instrument/beam_incident
   detector:
     detector_channel_type: multichannel
     count_time:
