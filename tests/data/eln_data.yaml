@@ -48,7 +48,7 @@ instrument:
     wavelength:
       value: 532.1
       unit: nm
-  beam_532nmlaser:
+  beam_incident:
     parameter_reliability: nominal
     average_power:
       value: 60
