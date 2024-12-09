@@ -28,10 +28,15 @@ dependencies = [
 
 [project.entry-points."pynxtools.reader"]
 raman = "pynxtools_raman.reader:RamanReader"
+
 [tool.setuptools.packages.find]
 where = [
     "src",
 ]
+
+[tool.setuptools.package-data]
+pynxtools_raman = ["*.json"]
+
 
 [project.urls]
 "Homepage" = "https://github.com/FAIRmat-NFDI/pynxtools-raman"
