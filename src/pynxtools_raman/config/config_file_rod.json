@@ -38,7 +38,7 @@
   "/ENTRY[entry]/DATA[data]/y_values": "@data:_raman_spectrum.intensity",
   "/ENTRY[entry]/DATA[data]/y_values/@units": "arb. units",
   "/ENTRY[entry]/DATA[data]/y_values/@long_name": "Intensity",
-  "/ENTRY[entry]/DATA[data]/@axes":"x_values_raman",
+  "/ENTRY[entry]/DATA[data]/@axes":["x_values_raman"],
   "/ENTRY[entry]/DATA[data]/x_values_raman/@long_name": "Raman Shift",
   "/ENTRY[entry]/DATA[data]/x_values_raman": "@data:_raman_spectrum.raman_shift",
   "/ENTRY[entry]/DATA[data]/x_values_raman/@units": "1/cm"
