@@ -223,7 +223,7 @@ class RamanReader(MultiFormatReader):
         #    return None
         if self.meta_data:
             print(self.raman_data.keys())
-            print(key, "##",path)
+            print(key, "##", path)
             # delete the respective used path/key from the metadata file
             # use later the remaining objects in meta data file for postprocessing
             # to add the remainin elements to NXcollection
