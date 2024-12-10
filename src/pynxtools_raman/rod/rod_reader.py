@@ -2,6 +2,7 @@ from typing import List, Dict, Any, Union
 import gemmi  # for cif file handling
 
 from pathlib import Path
+import logging
 
 logger = logging.getLogger("pynxtools")
 
