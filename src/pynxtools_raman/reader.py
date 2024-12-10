@@ -221,12 +221,13 @@ class RamanReader(MultiFormatReader):
         # if key == "/ENTRY[entry]/DATA[data]/x_values_raman":
         #    witec_laser_wavelength = self.eln_data.get("/ENTRY[entry]/instrument/beam_incident/wavelength")
         #    return None
-        if self.meta_data:
-            print(self.raman_data.keys())
-            print(key, "##", path)
-            # delete the respective used path/key from the metadata file
-            # use later the remaining objects in meta data file for postprocessing
-            # to add the remainin elements to NXcollection
+
+        # if self.meta_data:
+        # print(self.raman_data.keys())
+        # print(key, "##", path)
+        # delete the respective used path/key from the metadata file
+        # use later the remaining objects in meta data file for postprocessing
+        # to add the remainin elements to NXcollection
 
         if value is not None:
             try:
