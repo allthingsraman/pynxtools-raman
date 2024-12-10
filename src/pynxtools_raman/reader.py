@@ -110,8 +110,6 @@ class RamanReader(MultiFormatReader):
         return template
 
     def handle_rod_file(self, filepath) -> Dict[str, Any]:
-        print("HANDLE ROD")
-
         # specify default config file for rod files
         reader_dir = Path(__file__).parent
         self.config_file = reader_dir.joinpath("config", "config_file_rod.json")  # pylint: disable=invalid-type-comment
@@ -160,6 +158,10 @@ class RamanReader(MultiFormatReader):
         """
         Read a .txt file from Witec Alpha Raman spectrometer and save the header and measurement data.
         """
+
+        # specify default config file
+        reader_dir = Path(__file__).parent
+        self.config_file = reader_dir.joinpath("config", "config_file_witec.json")  # pylint: disable=invalid-type-comment
 
         self.raman_data = parse_txt_file(self, filepath)
         self.post_process = post_process_witec.__get__(self, RamanReader)
