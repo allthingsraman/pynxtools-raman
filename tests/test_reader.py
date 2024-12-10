@@ -30,5 +30,5 @@ def test_nexus_conversion(data_dir, caplog_level, tmp_path, caplog):
         tmp_path=tmp_path,
         caplog=caplog,
     )
-    test.convert_to_nexus(caplog_level=caplog_level, ignore_undocumented=False)
+    test.convert_to_nexus(caplog_level=caplog_level, ignore_undocumented=True)
     test.check_reproducibility_of_nexus()

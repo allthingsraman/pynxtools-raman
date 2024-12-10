@@ -52,7 +52,7 @@ class RamanReader(MultiFormatReader):
         self.eln_data: Dict[str, Any] = {}
         self.config_file: Path
 
-        self.meta_data = None
+        self.missing_meta_data = None
 
         self.extensions = {
             ".yml": self.handle_eln_file,
@@ -99,11 +99,19 @@ class RamanReader(MultiFormatReader):
         template = super().read(template, file_paths, objects, suppress_warning=True)
         # set default data
 
+        if self.missing_meta_data:
+            for key in self.missing_meta_data:
+                template[
+                    f"/ENTRY[{self.callbacks.entry_name}]/COLLECTION[unused_rod_keys]/{key}"
+                ] = f"{self.missing_meta_data[key]}"
+
         template["/@default"] = "entry"
 
         return template
 
     def handle_rod_file(self, filepath) -> Dict[str, Any]:
+        print("HANDLE ROD")
+
         # specify default config file for rod files
         reader_dir = Path(__file__).parent
         self.config_file = reader_dir.joinpath("config", "config_file_rod.json")  # pylint: disable=invalid-type-comment
@@ -114,8 +122,7 @@ class RamanReader(MultiFormatReader):
         # get the key and value pairs from the rod file
         self.raman_data = rod.extract_keys_and_values_from_cif()
 
-        self.meta_data = copy.deepcopy(self.raman_data)
-        self.meta_data_length = len(self.meta_data)
+        self.missing_meta_data = copy.deepcopy(self.raman_data)
 
         # This changes all uppercase string elements to lowercase string elements for the given key, within a given key value pair
         key_to_make_value_lower_case = "_raman_measurement.environment"
@@ -217,17 +224,10 @@ class RamanReader(MultiFormatReader):
 
         value = self.raman_data.get(path)
 
-        # to calculate Raman shift for Witec Alpha from eln data
-        # if key == "/ENTRY[entry]/DATA[data]/x_values_raman":
-        #    witec_laser_wavelength = self.eln_data.get("/ENTRY[entry]/instrument/beam_incident/wavelength")
-        #    return None
+        # this filters out the meta data, which is up to now only created for .rod files
 
-        # if self.meta_data:
-        # print(self.raman_data.keys())
-        # print(key, "##", path)
-        # delete the respective used path/key from the metadata file
-        # use later the remaining objects in meta data file for postprocessing
-        # to add the remainin elements to NXcollection
+        if self.missing_meta_data:
+            del self.missing_meta_data[path]
 
         if value is not None:
             try:
