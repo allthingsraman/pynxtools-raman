@@ -3,6 +3,8 @@ import gemmi  # for cif file handling
 
 from pathlib import Path
 
+logger = logging.getLogger("pynxtools")
+
 
 class RodParser:
     """
@@ -14,7 +16,6 @@ class RodParser:
         self.cif_doc = None
         self.cif_block = None
         self.lines = []
-        self.n_headerlines = 12
 
     def _read_lines(self, file: Union[str, Path]):
         """
@@ -42,7 +43,7 @@ class RodParser:
                     line_positions_of_str_element.append(line_number)
         else:
             if rod_lines is None:
-                print("rod_lines_is_none")
+                logger.info(f"Problem during reading .rod file. 'rod_line' is None.")
             else:
                 for line_number, lines in enumerate(rod_lines):
                     if string_element in lines:
@@ -77,7 +78,7 @@ class RodParser:
         if len(key_positions) == len(cif_key_loop_boolean_dict):
             return cif_key_loop_boolean_dict
         else:
-            print(".cif file parsing warning: Not all cif-keys were parsed.")
+            logger.info(f".rod file parsing warning: Not all rod-keys were parsed.")
             return cif_key_loop_boolean_dict
 
     def key_pos_after_loop(self, loop_pos_lists, key_pos_list):

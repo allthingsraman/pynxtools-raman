@@ -62,10 +62,6 @@ class RamanReader(MultiFormatReader):
             ".rod": self.handle_rod_file,
         }
 
-        # only required if multiple file types are present
-        # for ext in RamanReader.__prmt_file_ext__:
-        #    self.extensions[ext] = self.handle_data_file
-
     def set_config_file(self, file_path: Path) -> Dict[str, Any]:
         if self.config_file is not None:
             logger.info(
@@ -82,32 +78,6 @@ class RamanReader(MultiFormatReader):
         )
 
         return {}
-
-    def get_attr(self, key: str, path: str) -> Any:
-        """
-        Get the metadata that was stored in the main file.
-        """
-        return self.get_metadata(self.raman_data, path, self.callbacks.entry_name)
-
-    def read(
-        self,
-        template: dict = None,
-        file_paths: Tuple[str] = None,
-        objects: Tuple[Any] = None,
-        **kwargs,
-    ) -> dict:
-        template = super().read(template, file_paths, objects, suppress_warning=True)
-        # set default data
-
-        if self.missing_meta_data:
-            for key in self.missing_meta_data:
-                template[
-                    f"/ENTRY[{self.callbacks.entry_name}]/COLLECTION[unused_rod_keys]/{key}"
-                ] = f"{self.missing_meta_data[key]}"
-
-        template["/@default"] = "entry"
-
-        return template
 
     def handle_rod_file(self, filepath) -> Dict[str, Any]:
         # specify default config file for rod files
@@ -171,7 +141,7 @@ class RamanReader(MultiFormatReader):
     def get_eln_data(self, key: str, path: str) -> Any:
         """
         Returns data from the eln file. This is done via the file: "config_file.json".
-        There are two suations:
+        There are two sitations:
             1. The .json file has only a key assigned
             2. The .json file has a key AND a value assigned.
         The assigned value should be a "path", which reflects another entry in the eln file.
@@ -238,6 +208,26 @@ class RamanReader(MultiFormatReader):
                 return self.raman_data.get(path)
         else:
             logger.warning(f"No axis name corresponding to the path {path}.")
+
+    def read(
+        self,
+        template: dict = None,
+        file_paths: Tuple[str] = None,
+        objects: Tuple[Any] = None,
+        **kwargs,
+    ) -> dict:
+        template = super().read(template, file_paths, objects, suppress_warning=True)
+        # set default data
+
+        if self.missing_meta_data:
+            for key in self.missing_meta_data:
+                template[
+                    f"/ENTRY[{self.callbacks.entry_name}]/COLLECTION[unused_rod_keys]/{key}"
+                ] = f"{self.missing_meta_data[key]}"
+
+        template["/@default"] = "entry"
+
+        return template
 
 
 READER = RamanReader
