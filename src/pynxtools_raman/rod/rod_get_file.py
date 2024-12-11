@@ -2,19 +2,32 @@ import argparse
 
 import requests
 
-
 rod_id = 1000679
 
 
-def save_rod_file_from_ROD_via_API(rod_id: int) -> str:
+def save_rod_file_from_ROD_via_API(rod_id: int):
     url = "https://solsa.crystallography.net/rod/" + str(rod_id) + ".rod"
-    response = requests.post(url)
 
-    filename = str(rod_id)
+    print(f"Initialized download of .rod file with ID '{rod_id}' from '{url}'.")
 
-    with open(filename + ".rod", "w", encoding="utf-8") as file:
-        file.write(response.text)
-    print("Saved ROD ID %s to file '%s'"(rod_id, filename))
+    try:
+        response = requests.post(url)
+        response.raise_for_status()  # Raise HTTP error for bad
+
+        print(f"Successfully received .rod file with ID '{rod_id}'")
+
+        filename = str(rod_id)
+
+        with open(filename + ".rod", "w", encoding="utf-8") as file:
+            file.write(response.text)
+        print(f"Saved .rod file with ID '{rod_id}' to file '{filename}'")
+
+    except requests.exceptions.ConnectionError as con_err:
+        print(f"ConnectionError occured: {con_err}")
+    except requests.exceptions.HTTPError as http_err:
+        print(f"CHTTPError occured: {http_err}")
+    except requests.exceptions.RequestException as req_exc:
+        print(f"RequestException occured: {req_exc}")
 
 
 def trigger_rod_download():
@@ -30,7 +43,3 @@ def trigger_rod_download():
     args = parser.parse_args()
 
     save_rod_file_from_ROD_via_API(args.rod_id)
-
-    # Use the parsed argument
-    print(f"Downloading CIF file: {args.rod_id}")
-    # Add your logic to download the file here
