@@ -1,6 +1,12 @@
 # Downloading multiple .rod files
 
-## download_rods_script.sh
+## Manually downloading
+
+You can download a rod file with `ÌD=1000679` via:
+`download_rod_file 1000679`
+
+
+## Download_rods_script.sh
 
 Adjust the file `download_rods_script.sh`to the range of download you want.
 Default start is `1` and default end is `3`.
