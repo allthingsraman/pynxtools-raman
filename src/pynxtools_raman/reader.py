@@ -90,6 +90,12 @@ class RamanReader(MultiFormatReader):
         # get the key and value pairs from the rod file
         self.raman_data = rod.extract_keys_and_values_from_cif()
 
+        # replace the [ and ] to avoid confliucts in processing with pynxtools NXclass assignments
+        self.raman_data = {
+            key.replace("_[local]_", "_local_"): value
+            for key, value in self.raman_data.items()
+        }
+
         self.missing_meta_data = copy.deepcopy(self.raman_data)
 
         # This changes all uppercase string elements to lowercase string elements for the given key, within a given key value pair
@@ -101,16 +107,17 @@ class RamanReader(MultiFormatReader):
         # transform the string into a datetime object
         time_key = "_raman_measurement.datetime_initiated"
         date_time_str = self.raman_data.get(time_key)
-        date_time_obj = datetime.datetime.strptime(date_time_str, "%Y-%m-%d")
-        # assume UTC for .rod data, as this is not specified in detail
-        tzinfo = datetime.timezone.utc
-        if isinstance(date_time_obj, datetime.datetime):
-            if tzinfo is not None:
-                # Apply the specified timezone to the datetime object
-                date_time_obj = date_time_obj.replace(tzinfo=tzinfo)
+        if date_time_str is not None:
+            date_time_obj = datetime.datetime.strptime(date_time_str, "%Y-%m-%d")
+            # assume UTC for .rod data, as this is not specified in detail
+            tzinfo = datetime.timezone.utc
+            if isinstance(date_time_obj, datetime.datetime):
+                if tzinfo is not None:
+                    # Apply the specified timezone to the datetime object
+                    date_time_obj = date_time_obj.replace(tzinfo=tzinfo)
 
-            # assign the dictionary the corrrected date format
-            self.raman_data[time_key] = date_time_obj.isoformat()
+                # assign the dictionary the corrrected date format
+                self.raman_data[time_key] = date_time_obj.isoformat()
 
         # remove capitalization
         objective_type_key = "_raman_measurement_device.optics_type"
@@ -199,7 +206,10 @@ class RamanReader(MultiFormatReader):
         # this filters out the meta data, which is up to now only created for .rod files
 
         if self.missing_meta_data:
-            del self.missing_meta_data[path]
+            # this if condition is required, to only delete keys which are abaialble by the data.
+            # e.g. is defined to extract it via config.json, but there is no value in meta data
+            if path in self.missing_meta_data.keys():
+                del self.missing_meta_data[path]
 
         if value is not None:
             try:
