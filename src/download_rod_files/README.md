@@ -14,7 +14,7 @@ Take a look [here](https://solsa.crystallography.net/rod/1000679.html), to get v
 
 ## Exectutute the script
 
-`./download_rods_script.sh`
+`./src/download_rod_files/download_rods_script.sh`
 
 
 ## Convert the downloaded .rod files

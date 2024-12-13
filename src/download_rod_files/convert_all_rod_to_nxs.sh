@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define the folder containing the .rod files
-folder_path="./src/download_rod_files"
+folder_path="."
 
 # Loop over all .rod files in the folder
 for file in "$folder_path"/*.rod; do
