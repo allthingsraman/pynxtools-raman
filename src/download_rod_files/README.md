@@ -6,8 +6,8 @@ Adjust the file `download_rods_script.sh`to the range of download you want.
 Default start is `1` and default end is `3`.
 Be careful: Do not trigger unneccsary amounts of downloads.
 
-Take a look [here](https://solsa.crystallography.net/rod/1000679.html), to get valid .rod IDs. For this example its e.g. `1000679`.
-
+Take a look [here](https://solsa.crystallography.net/rod/result), to get valid .rod IDs.
+The list of .rod IDs can be accessed [here](https://solsa.crystallography.net/rod/result.php?format=lst&CODSESSION=ooqj2idj19cgpe30275okg42df).
 ## Add the command as script
 
 `chmod +x download_rods_script.sh`
