@@ -28,6 +28,7 @@ from pynxtools.dataconverter.readers.utils import parse_yml
 
 
 from pynxtools_raman.rod.rod_reader import RodParser
+from pynxtools_raman.rod.rod_reader import post_process_rod
 from pynxtools_raman.witec.witec_reader import post_process_witec
 from pynxtools_raman.witec.witec_reader import parse_txt_file
 
@@ -129,6 +130,8 @@ class RamanReader(MultiFormatReader):
             if self.raman_data.get(objective_type_key) not in objective_type_list:
                 self.raman_data[objective_type_key] = "other"
 
+        self.post_process = post_process_rod.__get__(self, RamanReader)
+
         return {}
 
     def handle_txt_file(self, filepath):
@@ -204,6 +207,9 @@ class RamanReader(MultiFormatReader):
         value = self.raman_data.get(path)
 
         # this filters out the meta data, which is up to now only created for .rod files
+
+        if (path is None or path is "") and key is not None:
+            return self.raman_data.get(key)
 
         if self.missing_meta_data:
             # this if condition is required, to only delete keys which are abaialble by the data.
