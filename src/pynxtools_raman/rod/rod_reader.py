@@ -129,6 +129,8 @@ class RodParser:
                     value = value.replace("\n", " ")
                 return value.lstrip()  # remove leading space if it is present
             if value.count("\n") == 0:
+                if value[0] == "'":
+                    return value.replace("'", "")
                 return value
         if is_cif_loop_value:  # if block like value via loop_ = [....]
             output_list = []

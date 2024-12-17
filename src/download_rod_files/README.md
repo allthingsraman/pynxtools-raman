@@ -29,6 +29,9 @@ via the pynxtools-raman command:
 
 `dataconverter <PATH_TO>/1000679.rod src/pynxtools_raman/config/config_file_rod.json --reader raman --nxdl NXraman --output rod_example_neuxs.nxs`
 
+## Downloading all .rod files
+
+Take a look at the file: "download_all_rod_files_script.sh"
 
 # Automatec conversion of all .rod files to .nxs files
 
