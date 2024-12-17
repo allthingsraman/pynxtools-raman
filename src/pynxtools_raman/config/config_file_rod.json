@@ -10,7 +10,8 @@
   "/ENTRY[entry]/INSTRUMENT[instrument]/detector_TYPE[detector_ccd]/count_time/@units": "s",
   "/ENTRY[entry]/INSTRUMENT[instrument]/detector_TYPE[detector_ccd]/count_time": "@data:_raman_measurement.integration_time",
   "/ENTRY[entry]/INSTRUMENT[instrument]/detector_TYPE[detector_ccd]/detector_channel_type":"single-channel",
-  "/ENTRY[entry]/INSTRUMENT[instrument]/SOURCE[source_532nmlaser]/type": "@data:_raman_measurement_device.excitation_laser_type",
+  "/ENTRY[entry]/INSTRUMENT[instrument]/SOURCE[source_532nmlaser]/type": "Laser",
+  "/ENTRY[entry]/INSTRUMENT[instrument]/SOURCE[source_532nmlaser]/type_other": "@data:_raman_measurement_device.excitation_laser_type",
   "/ENTRY[entry]/INSTRUMENT[instrument]/FABRICATION[device_information]/vendor":"@data:_raman_measurement_device.company",
   "/ENTRY[entry]/INSTRUMENT[instrument]/FABRICATION[device_information]/model": "@data:_raman_measurement_device.model",
   "/ENTRY[entry]/INSTRUMENT[instrument]/LENS_OPT[objective_lens]/type": "@data:_raman_measurement_device.optics_type",
@@ -42,7 +43,6 @@
   "/ENTRY[entry]/DATA[data]/x_values_raman/@long_name": "Raman Shift",
   "/ENTRY[entry]/DATA[data]/x_values_raman": "@data:_raman_spectrum.raman_shift",
   "/ENTRY[entry]/DATA[data]/x_values_raman/@units": "1/cm",
-  "/ENTRY[entry]/experiment_identifier/service": "DOI",
   "/ENTRY[entry]/experiment_identifier/identifier": "@data:_journal_paper_doi",
   "/ENTRY[entry]/entry_identifier/service": "Raman open databse ID",
   "/ENTRY[entry]/entry_identifier/identifier": "@data:_rod_database.code"
