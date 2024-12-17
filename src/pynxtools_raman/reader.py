@@ -100,9 +100,9 @@ class RamanReader(MultiFormatReader):
 
         # This changes all uppercase string elements to lowercase string elements for the given key, within a given key value pair
         key_to_make_value_lower_case = "_raman_measurement.environment"
-        self.raman_data[key_to_make_value_lower_case] = self.raman_data.get(
-            key_to_make_value_lower_case
-        ).lower()
+        environment_name_str = self.raman_data.get(key_to_make_value_lower_case)
+        if environment_name_str is not None:
+            self.raman_data[key_to_make_value_lower_case] = environment_name_str.lower()
 
         # transform the string into a datetime object
         time_key = "_raman_measurement.datetime_initiated"
@@ -121,13 +121,13 @@ class RamanReader(MultiFormatReader):
 
         # remove capitalization
         objective_type_key = "_raman_measurement_device.optics_type"
-        self.raman_data[objective_type_key] = self.raman_data.get(
-            objective_type_key
-        ).lower()
-        # set a valid raman NXDL value, but only if it matches one of the correct ones:
-        objective_type_list = ["objective", "lens", "glass fiber", "none"]
-        if self.raman_data.get(objective_type_key) not in objective_type_list:
-            self.raman_data[objective_type_key] = "other"
+        objective_type_str = self.raman_data.get(objective_type_key)
+        if objective_type_str is not None:
+            self.raman_data[objective_type_key] = objective_type_str.lower()
+            # set a valid raman NXDL value, but only if it matches one of the correct ones:
+            objective_type_list = ["objective", "lens", "glass fiber", "none"]
+            if self.raman_data.get(objective_type_key) not in objective_type_list:
+                self.raman_data[objective_type_key] = "other"
 
         return {}
 
