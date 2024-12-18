@@ -22,6 +22,7 @@ import datetime
 from typing import Dict, Any
 from pathlib import Path
 from typing import Any, Dict, List, Tuple  # Optional, Union, Set
+import re
 
 from pynxtools.dataconverter.readers.multi.reader import MultiFormatReader
 from pynxtools.dataconverter.readers.utils import parse_yml
@@ -91,6 +92,14 @@ class RamanReader(MultiFormatReader):
         # get the key and value pairs from the rod file
         self.raman_data = rod.extract_keys_and_values_from_cif()
 
+        if self.raman_data.get("_raman_theoretical_spectrum.intensity"):
+            logger.warning(
+                f"Theoretical Raman Data .rod file found. File parsing aborted."
+            )
+            # prevent file parsing to setting an invalid config file name.
+            self.config_file = ""
+
+        # unit_cell_alphabetagamma
         # replace the [ and ] to avoid confliucts in processing with pynxtools NXclass assignments
         self.raman_data = {
             key.replace("_[local]_", "_local_"): value
@@ -98,6 +107,37 @@ class RamanReader(MultiFormatReader):
         }
 
         self.missing_meta_data = copy.deepcopy(self.raman_data)
+
+        if self.raman_data.get("_cell_length_a") is not None or "":
+            # transform 9.40(3) to 9.40
+            length_a = re.sub(r"\(\d+\)", "", self.raman_data.get("_cell_length_a"))
+            length_b = re.sub(r"\(\d+\)", "", self.raman_data.get("_cell_length_b"))
+            length_c = re.sub(r"\(\d+\)", "", self.raman_data.get("_cell_length_c"))
+            self.raman_data["rod_unit_cell_length_abc"] = [
+                float(length_a),
+                float(length_b),
+                float(length_c),
+            ]
+            del self.missing_meta_data["_cell_length_a"]
+            del self.missing_meta_data["_cell_length_b"]
+            del self.missing_meta_data["_cell_length_c"]
+        if self.raman_data.get("_cell_angle_alpha") is not None or "":
+            # transform 9.40(3) to 9.40
+            angle_alpha = re.sub(
+                r"\(\d+\)", "", self.raman_data.get("_cell_angle_alpha")
+            )
+            angle_beta = re.sub(r"\(\d+\)", "", self.raman_data.get("_cell_angle_beta"))
+            angle_gamma = re.sub(
+                r"\(\d+\)", "", self.raman_data.get("_cell_angle_gamma")
+            )
+            self.raman_data["rod_unit_cell_angles_alphabetagamma"] = [
+                float(angle_alpha),
+                float(angle_beta),
+                float(angle_gamma),
+            ]
+            del self.missing_meta_data["_cell_angle_alpha"]
+            del self.missing_meta_data["_cell_angle_beta"]
+            del self.missing_meta_data["_cell_angle_gamma"]
 
         # This changes all uppercase string elements to lowercase string elements for the given key, within a given key value pair
         key_to_make_value_lower_case = "_raman_measurement.environment"
