@@ -97,7 +97,7 @@ class RamanReader(MultiFormatReader):
                 f"Theoretical Raman Data .rod file found. File parsing aborted."
             )
             # prevent file parsing to setting an invalid config file name.
-            self.config_file = ""
+            self.config_file = Path()
 
         # unit_cell_alphabetagamma
         # replace the [ and ] to avoid confliucts in processing with pynxtools NXclass assignments
