@@ -108,6 +108,10 @@ class RamanReader(MultiFormatReader):
 
         self.missing_meta_data = copy.deepcopy(self.raman_data)
 
+        if self.raman_data.get("_cod_database_code") is not None or "":
+            self.raman_data["COD_service_name"] = "Crystallography Open Database"
+            del self.missing_meta_data["_cod_database_code"]
+
         if self.raman_data.get("_cell_length_a") is not None or "":
             # transform 9.40(3) to 9.40
             length_a = re.sub(r"\(\d+\)", "", self.raman_data.get("_cell_length_a"))
