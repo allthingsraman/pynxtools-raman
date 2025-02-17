@@ -39,6 +39,8 @@ filelock==3.16.1
     # via virtualenv
 fonttools==4.54.1
     # via matplotlib
+gemmi==0.7.0
+    # via pynxtools-raman (pyproject.toml)
 ghp-import==2.1.0
     # via mkdocs
 h5py==3.12.1
@@ -178,8 +180,10 @@ pyyaml-env-tag==0.1
     # via mkdocs
 regex==2024.9.11
     # via mkdocs-material
-requests==2.32.3
-    # via mkdocs-material
+requests==2.31.0
+    # via
+    #   pynxtools-raman (pyproject.toml)
+    #   mkdocs-material
 ruff==0.7.0
     # via pynxtools-raman (pyproject.toml)
 scipy==1.14.1
