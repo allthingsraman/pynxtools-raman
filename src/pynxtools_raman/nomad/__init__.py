@@ -48,11 +48,11 @@ raman_app = AppEntryPoint(
             #    quantity=f"data.*.ENTRY[*].definition__field#{schema}",
             #    selected=True,
             # ),
-            #Column(
+            # Column(
             #    title="start_time",
             #    quantity=f"data.ENTRY[*].start_time__field#{schema}",
             #    selected=True,
-            #),
+            # ),
             Column(
                 title="Material Name",
                 quantity=f"data.ENTRY[*].SAMPLE[*].name__field#{schema}",
@@ -68,11 +68,11 @@ raman_app = AppEntryPoint(
                 quantity=f"data.ENTRY[*].SAMPLE[*].ENVIRONMENT[1].SENSOR[*].value__field#{schema}",
                 selected=True,
             ),
-            #Column(
+            # Column(
             #    title="scattering_config",
             #    quantity=f"data.ENTRY[*].INSTRUMENT[*].scattering_configuration__field#{schema}#str",
             #    selected=True,
-            #),
+            # ),
             Column(
                 title="Unit Cell Volume",
                 quantity=f"data.ENTRY[*].SAMPLE[*].unit_cell_volume__field#{schema}",
@@ -129,7 +129,7 @@ raman_app = AppEntryPoint(
         # Controls the default dashboard shown in the search interface
         dashboard={
             "widgets": [
-                #{
+                # {
                 #    "type": "histogram",
                 #    "show_input": False,
                 #    "autorange": True,
@@ -140,7 +140,7 @@ raman_app = AppEntryPoint(
                 #    "layout": {
                 #        "lg": {"minH": 3, "minW": 3, "h": 4, "w": 8, "y": 6, "x": 0}
                 #    },
-                #},
+                # },
                 {
                     "type": "histogram",
                     "show_input": False,
@@ -187,7 +187,7 @@ raman_app = AppEntryPoint(
                         "lg": {"minH": 3, "minW": 3, "h": 6, "w": 4, "y": 14, "x": 8}
                     },
                 },
-                #{
+                # {
                 #    "type": "histogram",
                 #    "show_input": False,
                 #    "autorange": True,
@@ -198,7 +198,7 @@ raman_app = AppEntryPoint(
                 #    "layout": {
                 #        "lg": {"minH": 3, "minW": 3, "h": 4, "w": 8, "y": 14, "x": 0}
                 #    },
-                #},
+                # },
                 {
                     "type": "terms",
                     "show_input": False,
@@ -243,7 +243,7 @@ raman_app = AppEntryPoint(
                         "lg": {"minH": 3, "minW": 3, "h": 4, "w": 8, "y": 18, "x": 0}
                     },
                 },
-                #{
+                # {
                 #    "type": "terms",
                 #    "show_input": False,
                 #    "scale": "linear",
@@ -252,8 +252,8 @@ raman_app = AppEntryPoint(
                 #    "layout": {
                 #        "lg": {"minH": 3, "minW": 3, "h": 4, "w": 4, "y": 18, "x": 0}
                 #    },
-                #},
-                #{
+                # },
+                # {
                 #    "type": "histogram",
                 #    "show_input": False,
                 #    "autorange": True,
@@ -265,8 +265,8 @@ raman_app = AppEntryPoint(
                 #    "layout": {
                 #        "lg": {"minH": 3, "minW": 3, "h": 4, "w": 8, "y": 18, "x": 0}
                 #    },
-                #},
-                #{
+                # },
+                # {
                 #    "type": "histogram",
                 #    "show_input": False,
                 #    "autorange": True,
@@ -277,9 +277,9 @@ raman_app = AppEntryPoint(
                 #    "layout": {
                 #        "lg": {"minH": 3, "minW": 3, "h": 4, "w": 8, "y": 18, "x": 8}
                 #    },
-                #},
+                # },
                 # Not included, as over 98% of the ROD data has the same value: "unoriented"
-                #{
+                # {
                 #    "type": "terms",
                 #    "show_input": False,
                 #    "scale": "linear",
@@ -288,8 +288,8 @@ raman_app = AppEntryPoint(
                 #    "layout": {
                 #        "lg": {"minH": 3, "minW": 3, "h": 4, "w": 4, "y": 0, "x": 12}
                 #    },
-                #},
-                #{
+                # },
+                # {
                 #    "type": "terms",
                 #    "show_input": False,
                 #    "scale": "linear",
@@ -298,7 +298,7 @@ raman_app = AppEntryPoint(
                 #    "layout": {
                 #        "lg": {"minH": 3, "minW": 3, "h": 4, "w": 8, "y": 0, "x": 16}
                 #    },
-                #},
+                # },
                 {
                     "type": "periodic_table",
                     "scale": "linear",
@@ -307,7 +307,7 @@ raman_app = AppEntryPoint(
                         "lg": {"minH": 3, "minW": 3, "h": 6, "w": 12, "y": 0, "x": 0}
                     },
                 },
-                #{
+                # {
                 #    "type": "histogram",
                 #    "show_input": False,
                 #    "autorange": True,
@@ -318,7 +318,7 @@ raman_app = AppEntryPoint(
                 #    "layout": {
                 #        "lg": {"minH": 3, "minW": 3, "h": 6, "w": 12, "y": 4, "x": 12}
                 #    },
-                #},
+                # },
             ]
         },
     ),
