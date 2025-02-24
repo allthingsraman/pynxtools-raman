@@ -42,55 +42,31 @@ raman_app = AppEntryPoint(
         # Controls which columns are shown in the results table
         columns=[
             Column(quantity="entry_id", selected=True),
-            # Column(quantity=f"entry_type", selected=True),
-            # Column(
-            #    title="definition",
-            #    quantity=f"data.*.ENTRY[*].definition__field#{schema}",
-            #    selected=True,
-            # ),
-            # Column(
-            #    title="start_time",
-            #    quantity=f"data.ENTRY[*].start_time__field#{schema}",
-            #    selected=True,
-            # ),
             Column(
                 title="Material Name",
                 quantity=f"data.ENTRY[*].SAMPLE[*].name__field#{schema}",
                 selected=True,
             ),
             Column(
-                title="Space Group",
+                title="Space Group Number",
                 quantity=f"data.ENTRY[*].SAMPLE[*].space_group__field#{schema}#str",
                 selected=True,
             ),
-            Column(
-                title="Temperature",
-                quantity=f"data.ENTRY[*].SAMPLE[*].ENVIRONMENT[1].SENSOR[*].value__field#{schema}",
-                selected=True,
-            ),
-            # Column(
-            #    title="scattering_config",
-            #    quantity=f"data.ENTRY[*].INSTRUMENT[*].scattering_configuration__field#{schema}#str",
+            #Column(
+            #    title="Temperature",
+            #    quantity=f"data.ENTRY[*].SAMPLE[*].ENVIRONMENT[1].SENSOR[*].value__field#{schema}",
             #    selected=True,
-            # ),
+            #),
             Column(
                 title="Unit Cell Volume",
                 quantity=f"data.ENTRY[*].SAMPLE[*].unit_cell_volume__field#{schema}",
                 selected=True,
             ),
             Column(
-                title="NeXus File Title",
+                title="Long Name",
                 quantity=f"data.ENTRY[*].title__field#{schema}",
                 selected=True,
             ),
-            # Only 311 of 1131 ROD entries have this field...
-            # Column(
-            #    title="physical_form",
-            #    quantity=f"data.*.ENTRY[*].SAMPLE[*].physical_form__field#{schema}",
-            #    selected=True,
-            # ),
-            # add this:
-            # exfitation wavelength --> need deeper search for quantities in nexus
         ],
         # Dictionary of search filters that are always enabled for queries made
         # within this app. This is especially important to narrow down the
@@ -104,7 +80,7 @@ raman_app = AppEntryPoint(
             title="Material",
             items=[
                 Menu(
-                    title="elements",
+                    title="Elements",
                     items=[
                         MenuItemPeriodicTable(
                             quantity="results.material.elements",
@@ -123,24 +99,42 @@ raman_app = AppEntryPoint(
                             x="results.material.n_elements",
                         ),
                     ],
-                )
+                ),
+                Menu(
+                    title="Space Group Number",
+                    items=[
+                        MenuItemTerms(
+                            quantity=f"data.ENTRY.SAMPLE.space_group__field#{schema}#str",
+                            width=10,
+                            options=10,
+                        ),
+                    ],
+                ),
+                Menu(
+                    title="Raman Spectrometer Model",
+                    items=[
+                        MenuItemTerms(
+                            quantity=f"data.ENTRY.INSTRUMENT.device_information.model__field#{schema}#str",
+                            width=10,
+                            options=5,
+                        ),
+                    ],
+                ),
+                Menu(
+                    title="Scattering Configuration",
+                    items=[
+                        MenuItemTerms(
+                            quantity=f"data.ENTRY.INSTRUMENT.scattering_configuration__field#{schema}#str",
+                            width=10,
+                            options=7,
+                        ),
+                    ],
+                ),
             ],
         ),
         # Controls the default dashboard shown in the search interface
         dashboard={
             "widgets": [
-                # {
-                #    "type": "histogram",
-                #    "show_input": False,
-                #    "autorange": True,
-                #    "nbins": 30,
-                #    "scale": "linear",
-                #    "quantity": f"data.ENTRY.start_time__field#{schema}",
-                #    "title": "Start Time",
-                #    "layout": {
-                #        "lg": {"minH": 3, "minW": 3, "h": 4, "w": 8, "y": 6, "x": 0}
-                #    },
-                # },
                 {
                     "type": "histogram",
                     "show_input": False,
@@ -150,7 +144,7 @@ raman_app = AppEntryPoint(
                     "quantity": f"data.ENTRY.INSTRUMENT.beam_incident.wavelength__field#{schema}#float",
                     "title": "Incident Wavelength [nm]",
                     "layout": {
-                        "lg": {"minH": 3, "minW": 3, "h": 4, "w": 8, "y": 6, "x": 0}
+                        "lg": {"minH": 3, "minW": 3, "h": 5, "w": 8, "y": 0, "x": 0}
                     },
                 },
                 {
@@ -162,61 +156,7 @@ raman_app = AppEntryPoint(
                     "quantity": f"data.ENTRY.INSTRUMENT.beam_incident.average_power__field#{schema}#float",
                     "title": "Laser Power [mW]",
                     "layout": {
-                        "lg": {"minH": 3, "minW": 3, "h": 4, "w": 8, "y": 10, "x": 0}
-                    },
-                },
-                {
-                    "type": "histogram",
-                    "show_input": False,
-                    "autorange": True,
-                    "nbins": 30,
-                    "scale": "log",
-                    "quantity": f"data.ENTRY.INSTRUMENT.beam_incident.extent__field#{schema}#float",
-                    "title": "Spot Size [µm]",
-                    "layout": {
-                        "lg": {"minH": 3, "minW": 3, "h": 4, "w": 8, "y": 14, "x": 0}
-                    },
-                },
-                {
-                    "type": "terms",
-                    "show_input": False,
-                    "scale": "linear",
-                    "quantity": f"data.ENTRY.INSTRUMENT.scattering_configuration__field#{schema}#str",
-                    "title": "Scattering Config",
-                    "layout": {
-                        "lg": {"minH": 3, "minW": 3, "h": 6, "w": 4, "y": 14, "x": 8}
-                    },
-                },
-                # {
-                #    "type": "histogram",
-                #    "show_input": False,
-                #    "autorange": True,
-                #    "nbins": 30,
-                #    "scale": "log",
-                #    "quantity": f"data.ENTRY.SAMPLE.space_group__field#{schema}#float",
-                #    "title": "Space Group",
-                #    "layout": {
-                #        "lg": {"minH": 3, "minW": 3, "h": 4, "w": 8, "y": 14, "x": 0}
-                #    },
-                # },
-                {
-                    "type": "terms",
-                    "show_input": False,
-                    "scale": "linear",
-                    "quantity": f"data.ENTRY.SAMPLE.space_group__field#{schema}#str",
-                    "title": "Space Group",
-                    "layout": {
-                        "lg": {"minH": 3, "minW": 3, "h": 26, "w": 4, "y": 0, "x": 12}
-                    },
-                },
-                {
-                    "type": "terms",
-                    "show_input": False,
-                    "scale": "linear",
-                    "quantity": f"data.ENTRY.INSTRUMENT.device_information.model__field#{schema}#str",
-                    "title": "Raman Spectrometer Model",
-                    "layout": {
-                        "lg": {"minH": 3, "minW": 3, "h": 8, "w": 4, "y": 6, "x": 8}
+                        "lg": {"minH": 3, "minW": 3, "h": 4, "w": 8, "y": 5, "x": 0}
                     },
                 },
                 {
@@ -228,7 +168,7 @@ raman_app = AppEntryPoint(
                     "quantity": f"data.ENTRY.INSTRUMENT.LENS_OPT.magnification__field#{schema}#float",
                     "title": "Magnification",
                     "layout": {
-                        "lg": {"minH": 3, "minW": 3, "h": 4, "w": 8, "y": 22, "x": 0}
+                        "lg": {"minH": 3, "minW": 3, "h": 3, "w": 6, "y": 0, "x": 8}
                     },
                 },
                 {
@@ -240,85 +180,21 @@ raman_app = AppEntryPoint(
                     "quantity": f"data.ENTRY.INSTRUMENT.LENS_OPT.numerical_aperture__field#{schema}#float",
                     "title": "Numerical Aperture",
                     "layout": {
-                        "lg": {"minH": 3, "minW": 3, "h": 4, "w": 8, "y": 18, "x": 0}
+                        "lg": {"minH": 3, "minW": 3, "h": 3, "w": 6, "y": 3, "x": 8}
                     },
                 },
-                # {
-                #    "type": "terms",
-                #    "show_input": False,
-                #    "scale": "linear",
-                #    "quantity": f"data.ENTRY.INSTRUMENT.device_information.model__field#{schema}#str",
-                #    "title": "Space Group",
-                #    "layout": {
-                #        "lg": {"minH": 3, "minW": 3, "h": 4, "w": 4, "y": 18, "x": 0}
-                #    },
-                # },
-                # {
-                #    "type": "histogram",
-                #    "show_input": False,
-                #    "autorange": True,
-                #    "nbins": 30,
-                #    "scale": "log",
-                #    "quantity": f"data.ENTRY.SAMPLE.ENVIRONMENT.SENSOR.value__field#{schema}#float",
-                #    "title": "Temperature [°C]",
-                #    #"title": f"data.ENTRY.SAMPLE.ENVIRONMENT.SENSOR.measurement__field#{schema}#float",
-                #    "layout": {
-                #        "lg": {"minH": 3, "minW": 3, "h": 4, "w": 8, "y": 18, "x": 0}
-                #    },
-                # },
-                # {
-                #    "type": "histogram",
-                #    "show_input": False,
-                #    "autorange": True,
-                #    "nbins": 30,
-                #    "scale": "log",
-                #    "quantity": f"data.ENTRY.SAMPLE.LENS_OPT.numerical_aperture__field#{schema}#float",
-                #    "title": "Spot Size [µm]",
-                #    "layout": {
-                #        "lg": {"minH": 3, "minW": 3, "h": 4, "w": 8, "y": 18, "x": 8}
-                #    },
-                # },
-                # Not included, as over 98% of the ROD data has the same value: "unoriented"
-                # {
-                #    "type": "terms",
-                #    "show_input": False,
-                #    "scale": "linear",
-                #    "quantity": f"data.ENTRY.INSTRUMENT.scattering_configuration__field#{schema}#str",
-                #    "title": "Scattering Config2",
-                #    "layout": {
-                #        "lg": {"minH": 3, "minW": 3, "h": 4, "w": 4, "y": 0, "x": 12}
-                #    },
-                # },
-                # {
-                #    "type": "terms",
-                #    "show_input": False,
-                #    "scale": "linear",
-                #    "quantity": f"data.ENTRY.raman_experiment_type__field#{schema}#str",
-                #    "title": "Raman Type",
-                #    "layout": {
-                #        "lg": {"minH": 3, "minW": 3, "h": 4, "w": 8, "y": 0, "x": 16}
-                #    },
-                # },
-                {
-                    "type": "periodic_table",
-                    "scale": "linear",
-                    "quantity": f"results.material.elements",
+                 {
+                    "type": "histogram",
+                    "show_input": False,
+                    "autorange": True,
+                    "nbins": 30,
+                    "scale": "log",
+                    "quantity": f"data.ENTRY.INSTRUMENT.beam_incident.extent__field#{schema}#float",
+                    "title": "Beam diameter [µm]",
                     "layout": {
-                        "lg": {"minH": 3, "minW": 3, "h": 6, "w": 12, "y": 0, "x": 0}
+                        "lg": {"minH": 3, "minW": 3, "h": 3, "w": 6, "y": 6, "x": 8}
                     },
-                },
-                # {
-                #    "type": "histogram",
-                #    "show_input": False,
-                #    "autorange": True,
-                #    "nbins": 30,
-                #    "scale": "linear",
-                #    "quantity": f"data.ENTRY.SAMPLE.unit_cell_volume__field#{schema}",  # data.Raman.ENTRY.SAMPLE.unit_cell_volume__field#pynxtools.nomad.schema.NeXus
-                #    "title": "Unit Cell Volume",
-                #    "layout": {
-                #        "lg": {"minH": 3, "minW": 3, "h": 6, "w": 12, "y": 4, "x": 12}
-                #    },
-                # },
+                 },
             ]
         },
     ),
