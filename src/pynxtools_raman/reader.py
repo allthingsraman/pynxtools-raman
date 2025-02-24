@@ -263,7 +263,8 @@ class RamanReader(MultiFormatReader):
 
         if value is not None:
             try:
-                # ensure that the space_group entry from NXsample
+                # ensure that the space_group entry from NXsample is of type
+                # NXchar, even if space group numbers are used
                 if "/space_group" in key and "/SAMPLE" in key:
                     return value
                 return float(value)
