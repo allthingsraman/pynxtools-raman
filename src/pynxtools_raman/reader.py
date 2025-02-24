@@ -263,6 +263,9 @@ class RamanReader(MultiFormatReader):
 
         if value is not None:
             try:
+                # ensure that the space_group entry from NXsample
+                if "/space_group" in key and "/SAMPLE" in key:
+                    return value
                 return float(value)
             except (ValueError, TypeError):
                 return self.raman_data.get(path)
