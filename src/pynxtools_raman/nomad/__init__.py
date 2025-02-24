@@ -52,11 +52,11 @@ raman_app = AppEntryPoint(
                 quantity=f"data.ENTRY[*].SAMPLE[*].space_group__field#{schema}#str",
                 selected=True,
             ),
-            #Column(
+            # Column(
             #    title="Temperature",
             #    quantity=f"data.ENTRY[*].SAMPLE[*].ENVIRONMENT[1].SENSOR[*].value__field#{schema}",
             #    selected=True,
-            #),
+            # ),
             Column(
                 title="Unit Cell Volume",
                 quantity=f"data.ENTRY[*].SAMPLE[*].unit_cell_volume__field#{schema}",
@@ -183,7 +183,7 @@ raman_app = AppEntryPoint(
                         "lg": {"minH": 3, "minW": 3, "h": 3, "w": 6, "y": 3, "x": 8}
                     },
                 },
-                 {
+                {
                     "type": "histogram",
                     "show_input": False,
                     "autorange": True,
@@ -194,7 +194,7 @@ raman_app = AppEntryPoint(
                     "layout": {
                         "lg": {"minH": 3, "minW": 3, "h": 3, "w": 6, "y": 6, "x": 8}
                     },
-                 },
+                },
             ]
         },
     ),
