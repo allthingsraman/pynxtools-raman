@@ -19,7 +19,7 @@ A current use case can be found [here](https://spectra.adma.ai/search/) with an 
 
 ### Tutorial
 
-A series of tutorials giving you an overview on how to store or convert your ellipsometry data to NeXus compliant files.
+This tutorial shows you how to install pynxtools-raman.
 
 - [Installation guide](tutorial/installation.md)
 
@@ -28,7 +28,8 @@ A series of tutorials giving you an overview on how to store or convert your ell
 
 ### How-to guides
 
-How-to guides provide step-by-step instructions for a wide range of tasks, with the overarching topics:
+A guide to show how to convert experimental data to NeXus files and how to download
+files from the Raman Open Database.
 
 - [Convert data to NeXus files](how-tos/convert_data.md)
 - [Download ROD files](how-tos/download_rod.md)
@@ -38,9 +39,9 @@ How-to guides provide step-by-step instructions for a wide range of tasks, with 
 <div markdown="block">
 
 
-### Reference
+### References
 
-Currently present implementations are: 
+Current examples of implementations are: 
 
 - [WITEC Alpha](reference/witec.md)
 - [Raman Open Database](reference/rod.md)
