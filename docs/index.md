@@ -17,24 +17,17 @@ A current use case can be found [here](https://spectra.adma.ai/search/) with an 
 <div markdown="block" class="home-grid">
 <div markdown="block"> 
 
-### Tutorial
+### Tutorials and guides
 
-This tutorial shows you how to install pynxtools-raman.
+Here are different tutorials and guides.
 
-- [Installation guide](tutorial/installation.md)
-
-</div>
-<div markdown="block">
-
-### How-to guides
-
-A guide to show how to convert experimental data to NeXus files and how to download
-files from the Raman Open Database.
-
-- [Convert data to NeXus files](how-tos/convert_data.md)
-- [Download ROD files](how-tos/download_rod.md)
+- [Installation guide](guides/installation.md)
+- [Convert data to NeXus files](guides/convert_data.md)
+- [Download ROD files](guides/download_rod.md)
+- [Adjustments of the config file](guides/adjust_config_file.md)
 
 </div>
+
 
 <div markdown="block">
 

@@ -4,11 +4,11 @@ site_description: |
 site_author: The FAIRmat authors
 nav:
   - Home: index.md
-  - Tutorials:
-    - tutorial/installation.md
-  - How-tos:
-    - how-tos/convert_data.md
-    - how-tos/download_rod.md
+  - Guides:
+    - guides/installation.md
+    - guides/convert_data.md
+    - guides/download_rod.md
+    - guides/adjust_config_file.md
   - Reference:
     - reference/witec.md
     - reference/rod.md

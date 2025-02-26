@@ -1,4 +1,4 @@
-# Installation
+# Installation of pynxtools
 
 for the latest development version.
 
