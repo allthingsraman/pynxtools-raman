@@ -1,8 +1,8 @@
 # Configuration of the config file
 
 The `pynxtools-raman` package enables the dataconversion from experimental data to
-a NeXus file whereby the [NXraman](https://fairmat-nfdi.github.io/nexus_definitions/classes/contributed_definitions/NXraman.html) concept is used.
-The dataconverter of `pynxtools-raman` is based on the [`MultiformatReader`](https://fairmat-nfdi.github.io/pynxtools/how-tos/use-multi-format-reader.html) from the `pynxtools` package. This allows using the config files to map pre-structured experimental data to NeXus concepts. In this way, some fundamental requirements for FAIR data become fulfilled.
+a NeXus file whereby the [NXraman](https://fairmat-nfdi.github.io/nexus_definitions/classes/contributed_definitions/NXraman.html) application definition is used.
+The dataconverter of `pynxtools-raman` is based on the [`MultiformatReader`](https://fairmat-nfdi.github.io/pynxtools/how-tos/use-multi-format-reader.html) from the `pynxtools` package. This allows using JSON config files to map pre-structured experimental data to NeXus concepts. You can learn more about the `MultiFormatReader` in the documentation of the `pynxtools` package ([here](fairmat-nfdi.github.io/pynxtools/learn/multi-format-reader.html) and [here](https://fairmat-nfdi.github.io/pynxtools/how-tos/use-multi-format-reader.html).
 
 ## How does the pre-structured experimental data look like?
 
@@ -38,7 +38,7 @@ dataconverter examples/witec/txt/eln_data.yaml examples/witec/txt/Si-wafer-Raman
 
 The indiviual commands are explained [here](convert_data.md).
 
-Aside of telling the program, which NeXus definition you want to use (`NXraman`) and what reader for the dataconverion to use (`raman`), you have to:
+Aside from telling the program which NeXus definition you want to use (`NXraman`) and what reader for the dataconverion to use (`raman`), you have to:
 
 - Define the name of the output file ([`witec_example_neuxs.nxs`](https://github.com/FAIRmat-NFDI/pynxtools-raman/blob/main/tests/data/witec/example.nxs))
 - Provide Raman spectra ([`examples/witec/txt/Si-wafer-Raman-Spectrum-1.txt`](https://github.com/FAIRmat-NFDI/pynxtools-raman/blob/main/tests/data/witec/Si-wafer-Raman-Spectrum-1.txt))
@@ -48,7 +48,7 @@ While the first two files are rather trivial and just definitions or given by th
 
 ## What is the config file good for?
 
-The config file tells the dataconverter to map the information of your `eln_data.yaml` to NeXus concepts. This connects your individual experimental data to generalized FAIR-enabling NeXus concepts. In this way, other experimentalists or eeven machines can pick up the information you proved, and understand exactly, that the information you proved is indeed the excitation wavelength of the beam, which is incident on the sample. It is not the laser, which is used for second-harmonic generation. This description of mapping is essential for FAIR data processing. You have to set this up. This is what the config file is good for.
+The config file tells the dataconverter to map the information of your data file and the `eln_data.yaml` file to NeXus concepts. This connects your individual experimental data to generalized FAIR-enabling NeXus concepts. In this way, other experimentalists or even machines can pick up the information you provided, and understand exactly, that the information you providedis indeed the excitation wavelength of the beam, which is incident on the sample. It is not the laser, which is used for second-harmonic generation. This description of mapping is essential for FAIR data processing. You have to set this up. This is what the config file is good for.
 
 ## Strucure of config file
 
@@ -95,7 +95,7 @@ the attribute `NXclass=NXentry`due to the uppercase `ENTRY`.
 Inside the group `entry`, the group with the name `instrument` is created. This group is given
 the attribute `NXclass=NXinstrument` due to the uppercase `INSTRUMENT`.
 
-Inside the group `instrument`, the group with the name `beam_incident` is created. As the input of the used NeXus definition is given as well (in this case, `NXraman`), the dataconvert knows, that you refer to `beam_incident` in `INSTRUMENT`, as shown in [`NXraman`](https://fairmat-nfdi.github.io/nexus_definitions/classes/contributed_definitions/NXraman.html). Therefore, the group is given the attribute `NXclass=NXbeam`.
+Inside the group `instrument`, the group with the name `beam_incident` is created. As the input of the used NeXus definition is given as well (in this case, `NXraman`), the dataconvert infers that you refer to `beam_incident` in `INSTRUMENT`, as shown in [`NXraman`](https://fairmat-nfdi.github.io/nexus_definitions/classes/contributed_definitions/NXraman.html). Therefore, the group is given the attribute `NXclass=NXbeam`.
 
 
 Inside the group `beam_incident`, the field with the name `wavelength` is created.
@@ -128,23 +128,23 @@ The reason is, that the values sometimes require different processing steps. Her
 from the `eln_data.yaml` file, while the values for `@data` originate from the `Si-wafer-Raman-Spectrum-1.txt` file.
 As some values are possibly
 
-**Why is for sometimes only the `@<FUNCTION>` given, but no `<PATH>`?**
+**Why is for sometimes only the `@<PREFIX>` given, but no `<PATH>`?**
 
 This is a shorter notation, to ease the writing of the config file. For example, the `key:value` pair:
 ```json
   "/ENTRY[entry]/INSTRUMENT[instrument]/beam_incident/wavelength": "@eln"
 ```
-refers to directly to NeXus concept entry, as the `eln_data.yaml` is structured like similar to the NeXus concept. The equivalent notation is: 
+refers to directly to NeXus concept entry, as the `eln_data.yaml` is structured similar to the NeXus concept (i.e., it has the same keys as the config files). The equivalent notation is: 
 
 ```json
   "/ENTRY[entry]/INSTRUMENT[instrument]/beam_incident/wavelength": "@eln:entry/instrument/beam_incident/wavelength"
 ```
-i.e., the data converter removes the `uppercase` symbols and the brackets `[]` from the key. This output then becomes the `<PATH>` in `@<FUNCTION>:<PATH>` (the value in the `key:value` pair). In this way, the `@eln` function just performs a path transformation.
+i.e., the data converter removes the `uppercase` symbols and the brackets `[]` from the key. This output then becomes the `<PATH>` in `@<PREFIX>:<PATH>` (the value in the `key:value` pair). In this way, the `@eln` function just performs a path transformation.
 
-## Examples how adjustments in the config file
+## Examples for adjusting the config file
 
 1. You remove `"/ENTRY[entry]/INSTRUMENT[instrument]/beam_incident/wavelength": "@eln"` from the config file, but keep the respective entry in the `eln_data.yaml` file:
-The `wavelength` value will not be written into the outpu NeXus file. Similarly, if your config file is emtpy, no entry will be generated at all. Even if your `eln_data.yaml` file is full of entries.
+The `wavelength` value will not be written into the output NeXus file. Similarly, if your config file is empty, no entry will be generated at all. Even if your `eln_data.yaml` file is full of entries.
 
 2. You keep `"/ENTRY[entry]/INSTRUMENT[instrument]/beam_incident/wavelength": "@eln"` from the config file, but remove the respective entry in the `eln_data.yaml` file:
 No value will be assigned or an error will occur.
@@ -152,8 +152,8 @@ No value will be assigned or an error will occur.
 3. You want to specify, that `beam_incident` is a `NXbeam` class:
 Replace `beam_incident` by `BEAM[beam_incident]`
 
-4. The determination of the incident beam wavelength is incorrect, as the device is malfunctions. But you know the correct value, from earlier measurements (which is 532nm). So you always want that the same value appears in the NeXus file for `"/ENTRY[entry]/INSTRUMENT[instrument]/beam_incident/wavelength"`: Replace `"@eln"` by `"532"`.
+4. The determination of the incident beam wavelength is incorrect, as the device has malfunctioned. But you know the correct value, from earlier measurements (which is 532nm). So you always want that the same value appears in the NeXus file. In that case, you need to write`"/ENTRY[entry]/INSTRUMENT[instrument]/beam_incident/wavelength":532`.
 
-5. You want to add the wavelength of the incident beam wavelength: Change `"@eln"` to `"nm"` for `"/ENTRY[entry]/INSTRUMENT[instrument]/beam_incident/wavelength/@units"`. If the value in the `eln_data.yaml` is still correctly processes, you can keep `"@eln"`.
+5. You want to add the wavelength of the incident beam wavelength: Change `"@eln"` to `"nm"` for `"/ENTRY[entry]/INSTRUMENT[instrument]/beam_incident/wavelength/@units"`. If the value in the `eln_data.yaml` is still correctly processed, you can keep `"@eln"`.
 
 6. You want to have the NeXus `NXentry` not named `entry` but instead `measurement1`: Change all `/ENTRY[entry]` to `/ENTRY[measurement1]`. To avoid renaming all individual entries in the `.json` config file, you can also structure the file with nested dictionaries, as shown [here](https://fairmat-nfdi.github.io/pynxtools/how-tos/use-multi-format-reader.html) for the `config_file.json`.
