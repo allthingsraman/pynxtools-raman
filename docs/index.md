@@ -15,19 +15,33 @@ pynxtools-raman is useful for scientists from the Raman spectroscopy community t
 A current use case can be found [here](https://spectra.adma.ai/search/) with an example NeXus file [here](https://spectra.adma.ai/search/?h5web=/RRUF/Anatase__R060277-3__Raman__514__0__ccw__Raman_Data_Processed__14960.nxs#/R060277%20Anatase_RRUF-4c1d6889-f9f1-5657-a80d-5738b50c4f9f/PROCESSED/R060277%20Anatase_1).
 
 <div markdown="block" class="home-grid">
+
 <div markdown="block"> 
 
-### Tutorials and guides
+### Tutorials
 
-Here are different tutorials and guides.
-
-- [Installation guide](guides/installation.md)
-- [Convert data to NeXus files](guides/convert_data.md)
-- [Download Raman Open Database files](guides/download_rod.md)
-- [Adjustments of the config file](guides/adjust_config_file.md)
+- [Config file and customized data conversion](tutorial/adjust_config_file.md)
 
 </div>
 
+
+<div markdown="block"> 
+
+### How-to guides
+
+- [Installation](how-tos/installation.md)
+- [Convert data to NeXus files](how-tos/convert_data.md)
+- [Download Raman Open Database files](how-tos/download_rod.md)
+
+</div>
+
+<div markdown="block"> 
+
+### Learn
+
+- You may want to take a look at general concepts of NeXus and how pynxtools works in the [documentation of pynxtools](https://fairmat-nfdi.github.io/pynxtools/)
+
+</div>
 
 <div markdown="block">
 

@@ -36,7 +36,7 @@ Lets take a look at the command, to convert the data for the WITec instrument:
 dataconverter examples/witec/txt/eln_data.yaml examples/witec/txt/Si-wafer-Raman-Spectrum-1.txt src/pynxtools_raman/config/config_file_witec.json --reader raman --nxdl NXraman --output examples/witec/txt/witec_example_nexus.nxs
 ```
 
-The indiviual commands are explained [here](convert_data.md).
+The indiviual commands are explained [here](../how-tos/convert_data.md).
 
 Aside from telling the program which NeXus definition you want to use (`NXraman`) and what reader for the dataconverion to use (`raman`), you have to:
 

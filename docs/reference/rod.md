@@ -2,7 +2,7 @@
 This shows two examples in which `.rod` files from the [Raman Open Database (ROD)](https://solsa.crystallography.net/rod/) are converted to NeXus `.nxs` files.
 
 ## Convert example data
-- Clone the [GitHub repository and install the latest development version](../guides/installation.md)
+- Clone the [GitHub repository and install the latest development version](../how-tos/installation.md)
 - Go into the root folder of this repository (default `pynxtools-raman`)
 - Copy and paste:
     ```
