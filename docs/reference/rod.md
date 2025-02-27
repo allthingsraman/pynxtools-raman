@@ -2,6 +2,7 @@
 This shows two examples in which `.rod` files from the [Raman Open Database (ROD)](https://solsa.crystallography.net/rod/) are converted to NeXus `.nxs` files.
 
 ## Convert example data
+- Clone the [GitHub repository and install the latest development version](../guides/installation.md)
 - Go into the root folder of this repository (default `pynxtools-raman`)
 - Copy and paste:
     ```
@@ -25,6 +26,6 @@ dataconverter <PATH_TO>/1000679.rod src/pynxtools_raman/config/config_file_rod.j
 
 **Convert multiple files**
 
-Take a look at the bash script and make it executable: `chmod +x convert_all_rod_to_nxs.sh`.
+Take a look at the [bash script](https://github.com/FAIRmat-NFDI/pynxtools-raman/blob/main/src/download_rod_files/convert_all_rod_to_nxs.sh) and make it executable: `chmod +x convert_all_rod_to_nxs.sh`.
 
 Call the script `./src/download_rod_files/convert_all_rod_to_nxs.sh`.
