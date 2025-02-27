@@ -33,7 +33,7 @@ This file is called `eln_data.yaml`and can be found [here](https://github.com/FA
 Lets take a look at the command, to convert the data for the WITec instrument:
 
 ```shell
-dataconverter examples/witec/txt/eln_data.yaml examples/witec/txt/Si-wafer-Raman-Spectrum-1.txt src/pynxtools_raman/config/config_file_witec.json --reader raman --nxdl NXraman --output examples/witec/txt/witec_example_neuxs.nxs
+dataconverter examples/witec/txt/eln_data.yaml examples/witec/txt/Si-wafer-Raman-Spectrum-1.txt src/pynxtools_raman/config/config_file_witec.json --reader raman --nxdl NXraman --output examples/witec/txt/witec_example_nexus.nxs
 ```
 
 The indiviual commands are explained [here](convert_data.md).
