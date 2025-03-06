@@ -43,8 +43,8 @@
   "/ENTRY[entry]/SAMPLE[sample]/unit_cell_volume":"@data:_cell_volume",
   "/ENTRY[entry]/SAMPLE[sample]/unit_cell_volume/@units":"angstrom^3",
   "/ENTRY[entry]/SAMPLE[sample]/space_group":"@data:_space_group_IT_number",
-  "/ENTRY[entry]/SAMPLE[sample]/identifier/service":"@data:COD_service_name",
-  "/ENTRY[entry]/SAMPLE[sample]/identifier/identifier":"@data:_cod_database_code",
+  "/ENTRY[entry]/SAMPLE[sample]/identifier":"@data:_cod_database_code",
+  "/ENTRY[entry]/SAMPLE[sample]/identifier/@type":"@data:COD_service_name",
   "/ENTRY[entry]/definition/@url": "Remove_this_if_pynxtools_issue_#469_is_solved",
   "/ENTRY[entry]/experiment_type": "Raman spectroscopy",
   "/ENTRY[entry]/raman_experiment_type": "other",
@@ -59,8 +59,8 @@
   "/ENTRY[entry]/DATA[data]/x_values_raman/@long_name": "Raman Shift [1/cm]",
   "/ENTRY[entry]/DATA[data]/x_values_raman": "@data:_raman_spectrum.raman_shift",
   "/ENTRY[entry]/DATA[data]/x_values_raman/@units": "1/cm",
-  "/ENTRY[entry]/experiment_identifier/identifier": "@data:_journal_paper_doi",
-  "/ENTRY[entry]/entry_identifier/service": "Raman open databse ID",
-  "/ENTRY[entry]/entry_identifier/identifier": "@data:_rod_database.code"
+  "/ENTRY[entry]/identifier_experiment": "@data:_journal_paper_doi",
+  "/ENTRY[entry]/identifier_entry": "@data:_rod_database.code",
+  "/ENTRY[entry]/identifier_entry/@type": "Raman open databse ID"
   }
 
