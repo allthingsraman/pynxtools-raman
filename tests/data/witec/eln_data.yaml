@@ -51,7 +51,7 @@ instrument:
       value: 532.1
       unit: nm
     average_power:
-      value: 60
+      value: 60.0
       unit: mW
     parameter_reliability: nominal
     associated_source: entry/instrument/source_532nmlaser
@@ -72,17 +72,17 @@ instrument:
     detector_number:
       - 1600
       - 200
-    gain_setting: 1.0
+    gain_setting: "1.0"
   temperature_sensor:
     attached_to: CCD
     measurement: temperature
     value:
-      value: -56
+      value: -56.0
       unit: celsius
   source_532nmlaser:
     type: laser #DPSS
     power:
-      value: 80
+      value: 80.0
       unit: mW
   device_information:
     vendor: Witec
@@ -92,14 +92,14 @@ instrument:
     device_information:
       vendor: Nikon
       model: "Nikon 20x"
-    magnification: 20
+    magnification: 20.0
     numerical_aperture: 0.4
   monochromator:
     device_information:
       model: UHTS300M
     grating:
       period:
-        value: 600
+        value: 600.0
         unit: counts / mm
     wavelength:
       value: 596.989 ##Spectral Center [rel. 1/cm]: 2042.739
@@ -117,8 +117,6 @@ experiment_type: Raman spectroscopy
 raman_experiment_type: non-resonant Raman spectroscopy
 title: Si-Wafer
 start_time: '2024-06-21T14:04:54+02:00'
-definition: NXraman
-definition/@url: https://github.com/FAIRmat-NFDI/nexus_definitions/blob/fairmat/contributed_definitions/NXraman.nxdl.xml # can be removed later, if the NeXus as submodule in pynxtools is updated, just in to let CICD pass.
 measurement_file_meta_data:
   delimiter: ","
   skip_lines: 17
