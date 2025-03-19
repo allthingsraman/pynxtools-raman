@@ -202,6 +202,7 @@ cython_debug/
 !src/download_rod_files/*.txt
 !tests/data/witec/*.txt
 !examples/witec/txt/*.txt
+!tests/data/rod/*.txt
 !requirements.txt
 !dev-requirements.txt
 build/
