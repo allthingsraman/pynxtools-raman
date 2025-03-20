@@ -17,22 +17,17 @@
 """An example reader implementation based on the MultiFormatReader."""
 
 import copy
-import logging
 import datetime
-from typing import Dict, Any
+import logging
+import re
 from pathlib import Path
 from typing import Any, Dict, List, Tuple  # Optional, Union, Set
-import re
 
 from pynxtools.dataconverter.readers.multi.reader import MultiFormatReader
 from pynxtools.dataconverter.readers.utils import parse_yml
 
-
-from pynxtools_raman.rod.rod_reader import RodParser
-from pynxtools_raman.rod.rod_reader import post_process_rod
-from pynxtools_raman.witec.witec_reader import post_process_witec
-from pynxtools_raman.witec.witec_reader import parse_txt_file
-
+from pynxtools_raman.rod.rod_reader import RodParser, post_process_rod
+from pynxtools_raman.witec.witec_reader import parse_txt_file, post_process_witec
 
 logger = logging.getLogger("pynxtools")
 
@@ -223,6 +218,7 @@ class RamanReader(MultiFormatReader):
             "/temp_control_TYPE[",
             "/software_TYPE[",
             "/LENS_OPT[",
+            "/identifierNAME[",
         ]
         if self.eln_data.get(key) is None:
             # filter for mixed concept names
@@ -252,7 +248,7 @@ class RamanReader(MultiFormatReader):
 
         # this filters out the meta data, which is up to now only created for .rod files
 
-        if (path is None or path is "") and key is not None:
+        if (path is None or path == "") and key is not None:
             return self.raman_data.get(key)
 
         if self.missing_meta_data:
