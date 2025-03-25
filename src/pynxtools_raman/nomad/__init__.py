@@ -12,6 +12,7 @@ from nomad.config.models.ui import (
     MenuItemHistogram,
     MenuItemPeriodicTable,
     MenuItemTerms,
+    MenuSizeEnum,
     SearchQuantities,
 )
 
@@ -81,17 +82,28 @@ raman_app = AppEntryPoint(
             items=[
                 Menu(
                     title="Elements",
+                    size=MenuSizeEnum.XXL,
                     items=[
                         MenuItemPeriodicTable(
-                            quantity="results.material.elements",
+                            search_quantity="results.material.elements",
                         ),
                         MenuItemTerms(
-                            quantity="results.material.chemical_formula_hill",
+                            search_quantity="results.material.chemical_formula_hill",
                             width=6,
                             options=0,
                         ),
                         MenuItemTerms(
-                            quantity="results.material.chemical_formula_iupac",
+                            search_quantity="results.material.chemical_formula_iupac",
+                            width=6,
+                            options=0,
+                        ),
+                        MenuItemTerms(
+                            search_quantity="results.material.chemical_formula_reduced",
+                            width=6,
+                            options=0,
+                        ),
+                        MenuItemTerms(
+                            search_quantity="results.material.chemical_formula_anonymous",
                             width=6,
                             options=0,
                         ),
@@ -129,6 +141,76 @@ raman_app = AppEntryPoint(
                             options=7,
                         ),
                     ],
+                ),
+                Menu(
+                    title="Instruments",
+                    size=MenuSizeEnum.LG,
+                    items=[
+                        MenuItemTerms(
+                            title="Name",
+                            search_quantity=f"data.ENTRY.INSTRUMENT.name__field#{schema}",
+                            width=12,
+                            options=12,
+                        ),
+                        MenuItemTerms(
+                            name="Short Name",
+                            search_quantity=f"data.ENTRY.INSTRUMENT.name___short_name#{schema}",
+                            width=12,
+                            options=12,
+                        ),
+                    ],
+                ),
+                Menu(
+                    title="Samples",
+                    size=MenuSizeEnum.LG,
+                    items=[
+                        MenuItemTerms(
+                            title="Name",
+                            search_quantity=f"data.ENTRY.SAMPLE.name__field#{schema}",
+                            width=12,
+                            options=12,
+                        ),
+                        MenuItemTerms(
+                            title="Sample ID",
+                            search_quantity=f"data.ENTRY.SAMPLE.identifierNAME__field#{schema}",
+                            width=12,
+                            options=12,
+                        ),
+                    ],
+                ),
+                Menu(
+                    title="Authors / Origin",
+                    size=MenuSizeEnum.LG,
+                    items=[
+                        MenuItemTerms(
+                            title="Entry Author",
+                            search_quantity=f"data.ENTRY.USER.name__field#{schema}",
+                            width=12,
+                            options=5,
+                        ),
+                        MenuItemTerms(
+                            title="Upload Author",
+                            search_quantity=f"authors.name",
+                            width=12,
+                            options=5,
+                        ),
+                        MenuItemTerms(
+                            title="Affiliation",
+                            search_quantity=f"data.ENTRY.USER.affiliation__field#{schema}",
+                            width=12,
+                            options=5,
+                        ),
+                    ],
+                ),
+                MenuItemHistogram(
+                    title="Start Time",
+                    x=f"data.ENTRY.start_time__field#{schema}",
+                    autorange=True,
+                ),
+                MenuItemHistogram(
+                    title="Upload Creation Time",
+                    x=f"upload_create_time",
+                    autorange=True,
                 ),
             ],
         ),
