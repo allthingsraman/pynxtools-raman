@@ -1,8 +1,8 @@
-from typing import List, Dict, Any, Union
-import gemmi  # for cif file handling
-
-from pathlib import Path
 import logging
+from pathlib import Path
+from typing import Any, Dict, List, Union
+
+import gemmi  # for cif file handling
 import numpy as np
 
 logger = logging.getLogger("pynxtools")
@@ -181,13 +181,13 @@ def post_process_rod(self) -> None:
 
         # update the data dictionary
         self.raman_data[
-            "/ENTRY[entry]/INSTRUMENT[instrument]/RESOLUTION[wavelength_resolution]/physical_quantity"
+            "/ENTRY[entry]/INSTRUMENT[instrument]/wavelength_resolution/physical_quantity"
         ] = "wavelength"
         self.raman_data[
-            "/ENTRY[entry]/INSTRUMENT[instrument]/RESOLUTION[wavelength_resolution]/resolution"
+            "/ENTRY[entry]/INSTRUMENT[instrument]/wavelength_resolution/resolution"
         ] = resolution_nm
         self.raman_data[
-            "/ENTRY[entry]/INSTRUMENT[instrument]/RESOLUTION[wavelength_resolution]/resolution/@units"
+            "/ENTRY[entry]/INSTRUMENT[instrument]/wavelength_resolution/resolution/@units"
         ] = "nm"
         # remove this key from original input data
         del self.missing_meta_data["_raman_measurement_device.resolution"]
