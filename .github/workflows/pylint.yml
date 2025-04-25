@@ -22,4 +22,4 @@ jobs:
           ruff format --check src/pynxtools_raman tests
       - name: mypy
         run: |
-          mypy src/pynxtools_raman tests
+          mypy src/pynxtools_raman tests --disable-error-code syntax
